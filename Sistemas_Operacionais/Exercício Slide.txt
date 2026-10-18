@@ -1,0 +1,13 @@
+Mateus Dassoler Spezia e Vinícius Oneda
+
+1) Quais são as razões pelas quais os processos obrigatoriamente precisam comunicar-se? Dê um exemplo de aplicação:
+
+Os processos precisam se comunicar para que eles possam cooperar entre eles para realizar uma tarefa solicitada pelo usuário e terem sincronismos para que situações extremas sejam contornadas e tratadas. Um exemplo de aplicação seria o Spooler, que tem a função de receber arquivos dos processos que estão executando no sistema, enfileirá-los para serem impressos, por exemplo, em uma impressora.
+
+2) Quais são os problemas que podem ocorrer na comunicação entre processos?
+
+Um dos problemas é quando mais de um processo faz acesso a um recurso compartilhado (condição de corrida), outro seria um sequenciamento inadequado de execução quando há dependências.
+
+3) O que é uma condição de corrida e como evitá-la? 
+
+É quando mais de um processo tenta acessar um recurso compartilhado ao mesmo tempo. É possível evitá-la utilizando a exclusão mútua através do uso de seções críticas.

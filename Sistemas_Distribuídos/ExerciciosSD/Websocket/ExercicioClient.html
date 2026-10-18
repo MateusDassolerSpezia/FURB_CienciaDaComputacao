@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Soma com WebSocket</title>
+    </head>
+    <body>
+        <h2>Soma de dois numeros</h2>
+
+        <input id="numero1" type="number" step="any" placeholder="Primeiro numero">
+        <input id="numero2" type="number" step="any" placeholder="Segundo numero">
+        <button id="somar" type="button">Somar</button>
+
+        <p id="status">Conectando ao servidor...</p>
+        <h3 id="resultado"></h3>
+
+        <script>
+            const websocket = new WebSocket("ws://127.0.0.1:5678/");
+            const status = document.getElementById("status");
+            const resultado = document.getElementById("resultado");
+            const botao = document.getElementById("somar");
+
+            websocket.onopen = function () {
+                status.textContent = "Conectado ao servidor.";
+            };
+
+            websocket.onclose = function () {
+                status.textContent = "Servidor desconectado.";
+            };
+
+            websocket.onerror = function () {
+                status.textContent = "Erro na conexao com o servidor.";
+            };
+
+            websocket.onmessage = function (event) {
+                resultado.textContent = event.data;
+            };
+
+            botao.onclick = function () {
+                const numero1 = document.getElementById("numero1").value;
+                const numero2 = document.getElementById("numero2").value;
+
+                if (numero1 === "" || numero2 === "") {
+                    resultado.textContent = "Informe os dois numeros.";
+                    return;
+                }
+
+                if (websocket.readyState !== WebSocket.OPEN) {
+                    resultado.textContent = "Aguarde a conexao com o servidor.";
+                    return;
+                }
+
+                websocket.send(numero1 + "," + numero2);
+            };
+        </script>
+    </body>
+</html>
