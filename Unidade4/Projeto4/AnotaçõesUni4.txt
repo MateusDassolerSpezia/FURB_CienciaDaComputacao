@@ -1,0 +1,56 @@
+							Exe3Uni4
+
+Entradas:
+2 números inteiros
+
+Saída:
+informar o maior valor entre eles
+
+Processo:
+ler (numero1)
+ler (numero2)
+
+
+							Exe4Uni4
+
+Entradas:
+número maior que 0
+
+Saída:
+se tem ou não casas decimais
+
+Processos (4):
+ler (número)
+1)
+ver se tem "," e se o n° após a "," for diferente de 0
+2)
+numero = inteiro dp numero
+3)
+numero / 1: Resto = 0 (inteiro)
+	    Resto = diferente de 0 (casa decimal)	
+		
+			
+							Exe6Uni4
+
+Entradas:
+caractere (abreviação do sexo)
+
+Saída:
+sexo
+
+Processo:
+ler (caractere)
+se o caractere é M
+escrever (Masculino)
+se o caractere é F
+escrever (Feminino)
+se caractere é I
+escrever (Não informado)
+senao
+escrever (Entrada incorreta)
+
+Testes:
+T1)
+caractere F / Feminino
+caractere M / Masculino
+caractere J / Incorreto
