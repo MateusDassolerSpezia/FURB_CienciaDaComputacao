@@ -1,0 +1,328 @@
+/*Google Fonts:*/
+@font-face {
+    font-family: 'MinhaFonte';
+    src: url('../fontes/Oswald-VariableFont_wght.ttf');
+    /*src: url(/fontes/Oswald-VariableFont_wght.ttf); ???*/
+}
+
+@media screen and (max-width: 412px) {
+    #menuEstreito {
+        display: block;
+    }
+    #menuLargo {
+        display: none;
+    }
+
+    .flex-container {
+        flex-direction: column;
+    }
+
+    .flex-container > div {
+        width: 80%;
+    }
+}
+
+@media screen and (min-width: 413px) {
+    #menuEstreito {
+        display: none;
+    }
+    #menuLargo {
+        display: block;
+    }
+
+    .flex-container {
+        flex-direction: row;
+    }
+
+    .flex-container > div {
+        width: 3em;
+    }
+}
+
+body {
+    margin: 1px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+header {
+    font-size: 2em; /*em = tamanho original*/
+    background-color: lightblue;
+    padding: 10px;
+    font-weight: bold;
+
+    position: sticky;
+    top: 0px;
+}
+
+nav {
+    background-color: lightskyblue;
+    padding: 10px;
+}
+
+nav img {
+    width: 24px;
+}
+
+nav menu {
+    margin: 0px;
+    padding: 0px;
+}
+
+nav li {
+    list-style: none;
+    padding-right: 10px;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+    color: lightgray;
+}
+
+.menuPrincipal > li {
+    display: inline-block;
+}
+
+.subMenu {
+    background-color: lightblue;
+    padding-top: 5px;
+    position: fixed;
+    /*display: none; OU*/ visibility: hidden
+}
+
+.menuPrincipal li:hover .subMenu {
+    display: block; visibility: visible
+}
+
+.subMenu li {
+    display: block;
+    margin-left: 15px;
+}
+
+footer {
+    color: white;
+    background-color: black;
+    text-align: center;
+    padding: 5px;
+    font-size: 0.75;
+    /*font-family: 'Courier New', Courier, monospace;*/
+    font-family: MinhaFonte;
+
+    position: fixed;
+    bottom: 0px;
+    width: 100vw; /*vw = ViewPort*/
+}
+
+main {
+    margin-bottom: 40px;
+}
+
+img {
+    width: 99vw; /*ou 100%*/
+}
+
+#div_img {
+    width: 50%;
+    height: 50%;
+    border: 1px solid black;
+    overflow: auto;
+}
+
+#nova_div {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid black;
+    width: 25%;
+    height: 20vh;
+    overflow: auto;
+}
+
+.classe2 {
+    font-weight: bold;
+    background-color: aquamarine !important;
+}
+
+.classe1 {
+    background-color: yellow;
+}
+
+p.classe1{
+    font-style: italic
+}
+
+#section_id {
+    font-size: 1.5em;
+}
+
+/*Google Fonts:*/
+.big-shoulders-stencil-fonte {
+    font-family: "Big Shoulders Stencil", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+}
+
+#exemplo_relative {
+    position: relative;
+    left: 30px;
+    bottom: 30px;
+}
+
+#div_pai {
+    border: 1px solid blue;
+    height: 50vh;
+    
+    position: relative;
+}
+
+#div_filho {
+    border: 1px solid red;
+    width: 50vw;
+    height: 25vh;
+    
+    position: absolute;
+    left: 30px;
+    top: 50px;
+}
+
+.container {
+    position: relative;
+    width: 50%;
+    height: 80vh;
+    border: 1px solid black;
+    overflow: auto;
+}
+
+.container img {
+    opacity: 0.3;
+}
+
+.topo_esq {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.topo_dir {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.chao_esq {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+
+.chao_dir {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.centralizado {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    top: 50%;
+}
+
+.botao {
+    background-color: blue;
+    color: white;
+    padding: 5px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 10px;
+}
+
+.botao:hover {
+    text-decoration: underline;
+    background-color: green;
+}
+
+.botao:active {
+    background-color: red;
+}
+
+.tabela {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.tabela td, th {
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.tabela tr:hover {
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+.tabela td:hover {
+    background-color: darkgray;
+}
+
+.tabela td:active {
+    background-color: black;
+    color: white;
+}
+
+.lista li:first-child {
+    font-weight: bold;
+}
+
+.lista li:last-child {
+    font-weight: bold;
+    color: blue;
+}
+
+.tabela2 tr:nth-child(2){
+    background-color: lightgreen;
+}
+
+/*odd/even/xn*/
+.tabela2 tr:nth-child(3n) {
+    background-color: lightgray;
+}
+
+.flex-container {
+    background-color: blue;
+    display: flex;
+    /*flex-direction: column;*/
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    /*height: 50vh;*/
+}
+
+.flex-container > div {
+    background-color: silver;
+    width: 3em;
+    /*height: 1.5em;*/
+    text-align: center;
+    margin: 10px;
+}
+
+.grid-container {
+    background-color: green;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    /*grid-template-columns: 1fr 1fr 1fr;*/
+    justify-content: space-evenly;
+}
+
+.grid-container > div {
+    background-color: silver;
+    text-align: center;
+    /*width: 3em;*/
+    padding: 10px;
+    margin: 10px;
+}

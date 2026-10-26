@@ -1,0 +1,29 @@
+<h3>Cadastro pessoas</h3>
+{{ pessoa.nome + " " + pessoa.sobrenome + ", mora em " + pessoa.cidade }}
+
+<p>
+    {{vetPessoas[1].nome + " " + vetPessoas[1].sobrenome + ", mora em " + vetPessoas[1].cidade}}
+</p>
+
+<div>
+    <table>
+        <tr *ngFor="let vPessoa of vetPessoas">
+
+            <ng-container *ngIf="vPessoa.nome == 'Marcos'; else elseTemplate">
+                <td style="background-color: green;">{{vPessoa.nome}}</td>
+            </ng-container>
+            <ng-template #elseTemplate>
+                <td>{{vPessoa.nome}}</td>
+            </ng-template>
+            
+            <!--<td>{{vPessoa.nome}}</td>-->
+            <td>{{vPessoa.sobrenome}}</td>
+            <td>{{vPessoa.cidade}}</td>
+            <td><button (click)="tamanhoString(vPessoa.sobrenome)">Conta sobrenome</button></td>
+        </tr>
+    </table>
+</div>
+
+<p>
+    {{mensagem}}
+</p>

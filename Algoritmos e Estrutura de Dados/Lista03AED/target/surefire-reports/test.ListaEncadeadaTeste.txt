@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: test.ListaEncadeadaTeste
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.057 s <<< FAILURE! -- in test.ListaEncadeadaTeste
+test.ListaEncadeadaTeste.Teste16 -- Time elapsed: 0.025 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "model.NoLista.getInfo()" because "no" is null
+	at model.ListaEncadeada.criarSublista(ListaEncadeada.java:117)
+	at test.ListaEncadeadaTeste.Teste16(ListaEncadeadaTeste.java:175)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo JavaScript 2</title>
+    <!--script src="/js/script.js"></script-->
+    <!--script src="js/classNF.js"></script-->
+    <!--script src="js/scriptExport.js"></script-->
+    <script src="/js/classPessoa.js"></script>
+</head>
+<body>
+
+    <div id="horaAtual"></div>
+    <div id="mensagem"></div>
+
+    <script>
+        /*function mostraData() {
+            document.getElementById('horaAtual').innerHTML = new Date();
+        }*/
+
+        //vFuncao = mostraData;
+
+        //vFuncao = () => document.getElementById('horaAtual').innerHTML = new Date();
+
+        //setInterval(vFuncao, 1000);
+        setInterval(() => document.getElementById('horaAtual').innerHTML = new Date(), 1000);
+
+        const vetor1 = [1, 2, 3, 4, 5, 6];
+        /*var vPos1 = vetor1[0];
+        var vPos2 = vetor1[1];
+        var vPos3 = vetor1[2];*/
+        var [vPos1, vPos2, vPos3, , ,vPos6] = vetor1;
+
+        const cProfessor = new Professor('Marcos', 'Cardoso', 'Blumenau', 'DSC');
+        var {nome, sobrenome, departamento} = cProfessor;
+
+        function operacoesBasicas(pNum1, pNum2) {
+            return [(pNum1 + pNum2), (pNum1 - pNum2), (pNum1 * pNum2), (pNum1 / pNum2)];
+        }
+
+        var [vSoma, vSubtrai, vMultiplia, vDivide] = operacoesBasicas(3,2);
+
+        const vetor2 = [7, 8, 9];
+        
+        var vetor3 = [...vetor1, ...vetor2]; //spread é bom com vetores
+        var [var1, var2, ...vetSobra] = vetor3;
+
+        const cAluno = new Aluno('Dalton', 'Reis', 'Itajaí', 'BCC');
+
+        var vPessoa = {...cProfessor, ...cAluno}; //spread com objetos tem que tomar cuidado
+
+        var x = 1;
+        var y = 2;
+        if (x > y) {
+            console.log('x é maior que y');
+        } else {
+            console.log('x é menor ou igual a y');
+        }
+
+        (x > y) ? console.log('x é maior que y') : console.log('x é menor ou igual a y');
+        (x > y) ? console.log('x é maior que y') : ((x < y) ? console.log('x é menor que y') : console.log('x é igual a y'));
+
+        console.log("O resultado é: " + ((x > y) ? 'x é maior que y' : 'x é menor ou igual a y'));
+
+        function verifica(pParam1, pParam2) {
+            return (pParam1 > pParam2) ? "pParam1 é maior que pParam2" : "pParam1 é menor ou igual a pParam2"
+        }
+
+        function executaFuncao(pFuncao, pParam1, pParam2) {
+            /*
+            Vários processos e instruções, etc...
+            */
+           return pFuncao(pParam1, pParam2);
+        }
+
+        vetor3.map(
+            (pValor, pIndice) => {
+                document.getElementById('mensagem').innerHTML += "Índice ["+pIndice+"] = "+pValor+"<br>";
+            }
+        );
+
+    </script>
+    <script type="module">
+        import {ProdutoPreco, ProdutoNF} from '../js/classNF.js';
+        import {olaMundo} from '../js/scriptExport.js';
+
+        var vProdPreco = new ProdutoPreco('Produto', 1);
+        window.alert(vProdPreco.nome + vProdPreco.preco);
+        window.alert(olaMundo());
+    </script>
+</body>
+</html>

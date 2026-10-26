@@ -1,0 +1,15 @@
+-------------------------------------------------------------------------------
+Test set: test.ArvoreTeste
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.047 s <<< FAILURE! -- in test.ArvoreTeste
+test.ArvoreTeste.Teste02 -- Time elapsed: 0.014 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "model.NoArvore.getPrimeiro()" because "no" is null
+	at model.Arvore.pertence(Arvore.java:59)
+	at model.Arvore.pertence(Arvore.java:66)
+	at model.Arvore.pertence(Arvore.java:66)
+	at model.Arvore.pertence(Arvore.java:52)
+	at test.ArvoreTeste.Teste02(ArvoreTeste.java:81)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+

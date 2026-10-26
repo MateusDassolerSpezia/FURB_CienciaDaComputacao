@@ -1,0 +1,34 @@
+<div class="container-cadastro">
+  <h2>Cadastro de Pessoa</h2>
+
+  <div class="form-cadastro">
+    <input type="text" [(ngModel)]="pessoa.id" placeholder="Informe o ID">
+    <button (click)="buscaPessoaId()">Consultar</button>
+
+    <div class="pessoa-info" *ngIf="pessoa.nome">
+      <p><strong>Nome:</strong> {{ pessoa.nome }}</p>
+      <p><strong>Departamento:</strong> {{ pessoa.departamento }}</p>
+      <p><strong>Endereço:</strong> {{ pessoa.endereco }}</p>
+      <p><strong>Email:</strong> {{ pessoa.email }}</p>
+      <button (click)="excluiPessoa()">Excluir</button>
+    </div>
+
+    <!-- Formulário para alteração -->
+    <div *ngIf="pessoa.nome">
+      <input type="text" [(ngModel)]="pessoa.nome" placeholder="Nome">
+      <input type="text" [(ngModel)]="pessoa.departamento" placeholder="Departamento">
+      <input type="text" [(ngModel)]="pessoa.endereco" placeholder="Endereço">
+      <input type="email" [(ngModel)]="pessoa.email" placeholder="Email">
+      <button (click)="alteraPessoa()">Alterar</button>
+    </div>
+
+    <!-- Mensagem de status -->
+    <div *ngIf="mensagem" [ngClass]="{
+      'mensagem-status': true,
+      'mensagem-ok': mensagemStatus === 'Ok',
+      'mensagem-erro': mensagemStatus === 'Erro'
+    }">
+      {{ mensagem }}
+    </div>
+  </div>
+</div>

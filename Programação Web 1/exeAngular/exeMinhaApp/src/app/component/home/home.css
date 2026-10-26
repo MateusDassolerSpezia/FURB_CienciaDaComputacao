@@ -1,0 +1,37 @@
+/*p {
+    text-align: center;
+}
+
+#texto {
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+#titulo {
+    font-size: 25px;
+}*/
+
+#titulo {
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 40px;
+    color: #2c3e50;
+}
+
+#texto {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    line-height: 1.6;
+}
+
+#texto ul {
+    margin-left: 20px;
+    list-style-type: disc;
+}

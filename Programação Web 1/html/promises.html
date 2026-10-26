@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo Promises</title>
+</head>
+
+<body>
+    <script>
+        var vPromise = new Promise(
+            (pFnCumpriu, pFnQuebrou) => {
+
+                //Condição para verificar o cumprimento da promessa (lançamento de um dado de 6 faces)
+                for (let j = 0; j <= (Math.random() * 500); j++) {
+                    for (let i = 0; i <= 10000000; i++) {
+                    }
+                }
+                var vDado = Math.floor((Math.random() * 6) + 1);
+
+                if (vDado == 6) {
+                    //Cumpriu a promessa    
+                    pFnCumpriu(vDado);
+                } else {
+                    //Qubrou a promessa
+                    pFnQuebrou(vDado);
+                }
+            }
+        );
+
+        async function chamaPromise() {
+            var vRetorno = '';
+            await vPromise
+                .then(
+                    (pNumero) => vRetorno = 'Cumpriu promessa => ' + pNumero //console.log('Cumpriu promessa => ' + pNumero)
+                )
+                .catch(
+                    (pNumero) => vRetorno = 'Quebrou promessa => ' + pNumero //console.log('Quebrou promessa => ' + pNumero)
+                );
+            return vRetorno;    
+        }
+        //console.log(chamaPromise());
+        chamaPromise()
+            .then(
+                (pMensagem) => console.log(pMensagem)
+            );
+    </script>
+</body>
+
+</html>

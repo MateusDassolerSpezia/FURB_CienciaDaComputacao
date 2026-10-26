@@ -1,0 +1,53 @@
+<div>
+    <button (click)="buscaAlbuns()">Carrega álbuns</button>
+</div>
+
+<p>
+    <input type="number" [(ngModel)]="album.id">
+    <button (click)="buscaAlbumId()">Busca álbum</button><br>
+    <input type="number" [(ngModel)]="album.userId"><br>
+    <input type="text" size="100" [(ngModel)]="album.title"><br>
+    <button (click)="alteraAlbum()">Salva alterações</button>
+    <button (click)="insereAlbum()">Insere álbum</button>
+    <button (click)="excluiAlbum()">Exclui álbum</button>
+    <button (click)="carregaFotos()">Carrega fotos</button>
+</p>
+
+<p [hidden]="album2.id == 0 || album2.id == null">
+    {{album2.id + ' - ' + album2.userId + ' - ' + album2.title}}
+</p>
+
+<p [hidden]="!(photo.id != 0 && photo.id != null)">
+    <input type="number" [(ngModel)]="photo.id"><br>
+    <input type="number" [(ngModel)]="photo.albumId"><br>
+    <input type="text" [(ngModel)]="photo.title" size="100"><br>
+    <input type="text" [(ngModel)]="photo.thumbnailUrl" size="100"><br>
+    <input type="text" [(ngModel)]="photo.url" size="100"><br>
+    <button (click)="updPhoto()">Salvar alterações</button>
+</p>
+
+<div>
+    <table>
+        <tr *ngFor="let vPhoto of vetPhotos">
+            <td>{{vPhoto.id}}</td>
+            <td>{{vPhoto.albumId}}</td>
+            <td>{{vPhoto.title}}</td>
+            <td><a href="{{vPhoto.url}}" target="_blank"><img src="{{vPhoto.thumbnailUrl}}" alt="Foto Id{{vPhoto.id}}"></a></td>
+            <td><button (click)="editarFoto(vPhoto)">Editar foto</button></td>
+        </tr>
+    </table>
+</div>
+
+<div>
+    <table>
+        <tr *ngFor="let vAlbum of vetAlbum">
+            <td>{{vAlbum.id}}</td>
+            <td>{{vAlbum.userId}}</td>
+            <td>{{vAlbum.title}}</td>
+            <td><button (click)="editaAlbum(vAlbum)">Edita álbum</button></td>
+        </tr>
+    </table>
+</div>
+
+<p>&nbsp;</p>
+<!--<p>&nbsp;</p>-->

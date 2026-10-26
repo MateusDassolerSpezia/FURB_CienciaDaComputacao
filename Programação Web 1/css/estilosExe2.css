@@ -1,0 +1,65 @@
+/*---------------------------------------------------------GERAL------------------------------------------------------------*/
+
+div {
+    padding: 8px;
+}
+
+/*---------------------------------------------------------TELA01------------------------------------------------------------*/
+
+.vermelho {
+    background-color: red;
+}
+
+.verde {
+    background-color: green;
+}
+
+.amarelo {
+    background-color: yellow;
+}
+
+/*---------------------------------------------------------TELA02------------------------------------------------------------*/
+
+
+
+/*---------------------------------------------------------TELA03------------------------------------------------------------*/
+
+li:hover {
+    cursor: pointer;
+}
+
+li a {
+    text-decoration: none;
+    color: black;
+}
+
+li {
+    width: 20px;
+}
+
+#corFundo {
+    width: 360px;
+}
+
+#corFundo:hover {
+    background-color: aquamarine;
+}
+
+table {
+    margin-left: 8px;
+}
+
+td {
+    width: 100px;
+    height: 40px;
+    border: 1px solid black;   
+    border-collapse: collapse; 
+}
+
+td:hover {
+    cursor: pointer;
+}
+
+.blocoVermelho {
+    background-color: red;
+}

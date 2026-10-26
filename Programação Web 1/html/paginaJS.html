@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página JS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <script>
+        x = 5;
+        y = 4;
+        z = x + y;
+        //Operadores aritméticos: + - / * ** %
+        //Outros operadores += -= /= *= **= %=
+        //Incrementadores ++ / decrementadores -- 
+
+        //Operadores de comparação: > < >= <= == !=
+        if (x > y) {
+            console.log('x é maior que y');
+        } else {
+            console.log('x é menor ou igual a y');
+        }
+
+        var a = 5;
+        const b = '5';
+        if (a == b) {
+            console.log('a é igual a b');
+        } else {
+            console.log('a é diferente de b');
+        }
+        //Operadores de comparação especiais: === !==
+        if (a === b) {
+            console.log('a e b são iguais e do mesmo tipo');
+        } else {
+            console.log('a e b não são iguais ou não são do mesmo tipo');
+        }
+        /*Operadores booleanos: 
+        && - AND
+        || - OR
+        !  - NOT
+        */
+        if (x > y && a == b) {
+            console.log('Ambos são true');
+        } else {
+            console.log('Ambos são false');
+        }
+
+        var vNome = 'Marcos';
+        for (let i = 0; i < vNome.length; i++) {
+            console.log(vNome[i]);
+        }
+
+        var vetor = [1, 2, 3, 'Blumenau', { nome: 'Marcos', cargo: 'Professor' }];
+        for (let posVetor of vetor) {
+            console.log(posVetor);
+        }
+
+        var vContador = 1;
+        while (vContador <= 10) {
+            console.log(vContador);
+            vContador++;
+        }
+
+        function funcao() {
+            console.log('Chamou funcao');
+        }
+        funcao();
+
+        function soma(pNumero) {
+            return pNumero + 5;
+        }
+        var vNumero = soma(3);
+        console.log(vNumero);
+
+    </script>
+
+    <!--<script src="js/script.js"></script>-->
+
+    <style>
+        .classe1 {
+            /*font-weight: bold;*/
+            font-size: 1.5em;
+            color: brown;
+        }
+
+        .classe2 {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: aqua;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h3 id="elemento_h3" onclick="alteraH3()">Página JS</h3>
+    <p>
+        <button onclick="alteraEstilo()">Altera estilo</button><br>
+        <button onclick="ativaClasse1()">Ativa classe1</button>
+        <button onclick="ativaClasse2()">Ativa classe2</button><br>
+        <button onclick="document.getElementById('elemento_h3').classList.remove('classe1')">Remove classe1</button>
+        <button onclick="document.getElementById('elemento_h3').classList.remove('classe2')">Remove classe2</button><br>
+        <button onclick="document.getElementById('elemento_h3').classList.toggle('classe1')">Liga/desliga classe1</button>
+        <button onclick="document.getElementById('elemento_h3').classList.toggle('classe2')">Liga/desliga classe2</button>
+    </p>
+    <div id="novoP">
+        <button onclick="criaParagrafo()">Cria parágrafo</button>
+    </div>
+    <p>
+        <div>
+            <input type="text" id="itemTarefa" placeholder="Informe a tarefa">
+            <button onclick="criaTarefa()">Cria tarefa</button>
+            <button onclick="criaInicio()">Cria no início</button> <br>
+            <button onclick="removeItem()">Remove item</button>
+            <button onclick="removeTerceiro()">Remove terceiro item</button>
+        </div>
+        <div>
+            <h3>Lista de tarefas:</h3>
+            <ul id="listaTarefas"></ul>
+        </div>
+    </p>
+    <p>
+        <table class="table" id="tabela">
+            <tr>
+                <th>Col 1</th>
+                <th>Col 2</th>
+                <th>Col 3</th>
+            </tr>
+        </table>
+    </p>
+    <p>
+        <button onclick="insereLinha()">Insere linha</button>
+        <button onclick="removeLinha()">Remove linha</button>
+    </p>
+
+</body>
+<script src="/js/script.js"></script>
+<script src="/js/classPessoa.js"></script>
+</html>
