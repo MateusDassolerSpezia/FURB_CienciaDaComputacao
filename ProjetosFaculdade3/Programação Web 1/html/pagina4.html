@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página 4</title>
+    <style>
+        input {
+            border-width: 0px;
+            border-bottom: 1px solid red;
+        }
+
+        input[type=password] {
+            background-color: yellow;
+        }
+
+        input[type=email]:focus {
+            background-color: aqua;
+        }
+
+        input[type=url]:focus {
+            width: 90vw;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>Página 4</h3>
+
+    <p>
+        <a href="pagina3.html">Página 3</a>
+    </p>
+
+    <p>
+    <form action="#" method="get"> <!--Utilizar em 100% dos casos o método "post"-->
+        <input type="text" name="login" placeholder="Informe login:" maxlength="10" autofocus required size="8">
+        <input type="password" name="senha" placeholder="Informe senha:" required>
+        <br><label for="idade">Idade :</label><input type="number" name="idade" id="idade" max="120" min="15" value="20">
+        <br><input type="text" name="campo1" value="Campo 1" disabled> <input type="text" name="campo2" value="Campo2" readonly> <input type="hidden" name="campo3" value="Campo3">
+        <br><label for="dtNascimento">Data de nascimento: </label><input type="date" name="dtNascimento" id="dtNascimento"> <input type="time" name="hora">
+        <br><label for="dtComleta">Data completa: </label><input type="datetime-local" name="dtComleta" id="dtCompleta">
+        <br><input type="month" name="mes"> <input type="week" name="semana">
+        <br><input type="email" name="email" placeholder="E-mail:"> 
+        <br><input type="url" name="url" placeholder="URL">
+        
+        <br><label for="manter">Manter conectado: </label><input type="checkbox" name="manter" id="manter" value="S" checked>
+        
+        <br><label for="cidade1">Blumenau</label>
+        <input type="radio" name="cidade" id="cidade1" value="BNU" checked>
+        <label for="cidade2">Gaspar</label>
+        <input type="radio" name="cidade" id="cidade2" value="GPR">
+        <label for="cidade3">Indaial</label>
+        <input type="radio" name="cidade" id="cidade3" value="IND">
+
+        <br><label for="carro">Carro: </label>
+        <select name="carro" id="carro">
+            <option value="selecione">Selecione um carro</option>
+            <option value="VW">Volkswagen</option>
+            <option value="F">Ford</option>
+            <option value="GM" selected>General Motors</option>
+            <option value="Fiat">Fiat</option>
+        </select>
+
+        <br><label for="paragrafo">Resumo: </label>
+        <textarea name="paragrafo" id="paragrafo" placeholder="Informe o resumo" rows="5" cols="50"></textarea>
+
+        <br><label for="arquivo">Informe o arquivo: </label>
+        <input type="file" name="arquivo" id="arquivo">
+
+        <br><input type="submit" value="Autenticar"> <input type="reset" value="Limpar formulário">
+        <br><input type="image" src="/imagens/home.png" alt="submit">
+    </form>
+    </p>
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+$bgColor: red;
+
+nav {
+    background-color: $bgColor;
+    padding: 10px;
+
+    img {
+        width: 24px;
+    }
+
+    menu {
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .menuPrincipal > li {
+        display: inline-block;
+    }
+}
+
+.botao {
+    padding: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 10px;
+    color: white;
+}
+
+.botao-default {
+    @extend .botao;
+    background-color: blue;
+}
+
+.botao-perigo {
+    @extend .botao;
+    background-color: red;
+}
+
+.botao-sucesso {
+    @extend .botao;
+    background-color: green;
+}
+
+@mixin texto-importante {
+    color: red;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.destaque {
+    margin-left: 10px;
+    @include texto-importante;
+}
+
+p.destaque {
+    margin-top: 10px;
+}
+
+div {
+    @include texto-importante;
+}
