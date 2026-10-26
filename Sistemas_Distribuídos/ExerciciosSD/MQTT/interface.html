@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitor MQTT</title>
+    <style>
+        body { margin: 0; padding: 32px; font-family: Arial, sans-serif; background: #f4f6f8; color: #1f2933; }
+        main { max-width: 900px; margin: auto; }
+        h1 { margin-bottom: 8px; }
+        #status { display: inline-block; margin-bottom: 24px; padding: 8px 12px; border-radius: 6px; background: #fff3cd; }
+        .conectado { background: #d1e7dd !important; color: #0f5132; }
+        .erro { background: #f8d7da !important; color: #842029; }
+        .dados { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
+        .cartao, .historico { padding: 20px; border-radius: 10px; background: white; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); }
+        .cartao h2 { margin: 0 0 12px; font-size: 16px; color: #52606d; }
+        .valor { font-size: 30px; font-weight: bold; color: #146c94; }
+        .historico { margin-top: 28px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; border-bottom: 1px solid #e4e7eb; text-align: left; }
+        th { color: #52606d; }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Monitor MQTT</h1>
+        <p>Tópico: <strong>/SMART_CPS</strong></p>
+        <p id="status">Conectando ao broker...</p>
+
+        <section class="dados">
+            <div class="cartao"><h2>Temperatura</h2><span id="temperatura" class="valor">--</span> °C</div>
+            <div class="cartao"><h2>Umidade</h2><span id="umidade" class="valor">--</span> %</div>
+            <div class="cartao"><h2>Pressão</h2><span id="pressao" class="valor">--</span> hPa</div>
+            <div class="cartao"><h2>Rotação</h2><span id="rpm" class="valor">--</span> RPM</div>
+        </section>
+
+        <section class="historico">
+            <h2>Últimas mensagens</h2>
+            <table>
+                <thead>
+                    <tr><th>Horário</th><th>Temperatura</th><th>Umidade</th><th>Pressão</th><th>RPM</th></tr>
+                </thead>
+                <tbody id="mensagens"></tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+    <script>
+        const TOPICO = "/SMART_CPS";
+        const status = document.getElementById("status");
+        const tabela = document.getElementById("mensagens");
+
+        const cliente = mqtt.connect("wss://broker.hivemq.com:8884/mqtt", {
+            clientId: "interface_" + Math.random().toString(16).slice(2, 10),
+            reconnectPeriod: 2000
+        });
+
+        cliente.on("connect", function () {
+            status.textContent = "Conectado ao broker MQTT";
+            status.className = "conectado";
+            cliente.subscribe(TOPICO, { qos: 2 }, function (erro) {
+                if (erro) {
+                    status.textContent = "Erro ao assinar o tópico";
+                    status.className = "erro";
+                }
+            });
+        });
+
+        cliente.on("reconnect", function () {
+            status.textContent = "Reconectando ao broker...";
+            status.className = "";
+        });
+
+        cliente.on("error", function () {
+            status.textContent = "Erro na conexão com o broker";
+            status.className = "erro";
+        });
+
+        cliente.on("message", function (topico, mensagem) {
+            try {
+                const dados = JSON.parse(mensagem.toString());
+                document.getElementById("temperatura").textContent = dados.Temp;
+                document.getElementById("umidade").textContent = dados.Umid;
+                document.getElementById("pressao").textContent = dados.Pressao;
+                document.getElementById("rpm").textContent = dados.Rpm;
+
+                const linha = tabela.insertRow(0);
+                const valores = [
+                    new Date().toLocaleTimeString("pt-BR"),
+                    dados.Temp + " °C",
+                    dados.Umid + " %",
+                    dados.Pressao + " hPa",
+                    dados.Rpm
+                ];
+
+                valores.forEach(function (valor) {
+                    const celula = linha.insertCell();
+                    celula.textContent = valor;
+                });
+
+                while (tabela.rows.length > 10) {
+                    tabela.deleteRow(10);
+                }
+            } catch (erro) {
+                status.textContent = "Mensagem recebida em formato inválido";
+                status.className = "erro";
+            }
+        });
+    </script>
+</body>
+</html>
