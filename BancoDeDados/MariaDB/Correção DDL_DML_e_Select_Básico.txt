@@ -1,0 +1,194 @@
+/*
+a) Criar as tabelas com as respectivas restrições de PK (chave primária) e FK (chave estrangeria);
+b) Criar uma regra (restrição) para não permitir que seja cadastrado nomes de autores idênticos (dica: unique key)
+*/
+
+-- criando tabela autor
+CREATE TABLE autor (
+cd_autor INTEGER,
+nm_autor VARCHAR(100),
+PRIMARY KEY(cd_autor)
+);
+
+ALTER TABLE autor
+ADD CONSTRAINT autor_nome_autor_uk UNIQUE KEY(nm_autor);
+
+-- criando tabela editora
+CREATE TABLE editora (
+cd_editora INTEGER,
+nm_editora VARCHAR(100),
+PRIMARY KEY(cd_editora)
+);
+
+-- criando tabela tipo_obra
+CREATE TABLE tipo_obra (
+tp_obra INTEGER,
+ds_tipo VARCHAR(30),
+PRIMARY KEY(tp_obra)
+);
+
+-- criando tabela obra
+CREATE TABLE obra (
+cd_obra INTEGER,
+nm_titulo VARCHAR(100),
+ds_edicao VARCHAR(20),
+dt_publicacao DATE,
+ds_sinopse VARCHAR(255),
+tp_obra INTEGER,
+cd_editora INTEGER, 
+PRIMARY KEY(cd_obra),
+FOREIGN KEY(tp_obra) REFERENCES tipo_obra(tp_obra),
+FOREIGN KEY(cd_editora) REFERENCES editora(cd_editora)
+);
+
+-- criando tabela obra_autor
+CREATE TABLE obra_autor (
+cd_obra INTEGER,
+cd_autor INTEGER,
+PRIMARY KEY(cd_obra, cd_autor),
+FOREIGN KEY(cd_obra) REFERENCES obra(cd_obra),
+FOREIGN KEY(cd_autor) REFERENCES autor(cd_autor)
+);
+
+/*
+c) Inserir registros das tabelas (mínimo):
+
+- 10 autores,
+
+- 03 tipos de obras (livro, monografia, mapa),
+
+- 05 editoras, e 
+
+- 10 obras sendo que algumas obras:
+
+(i) devem apresentar mais de um autor;
+(ii) não devem apresentar edição;
+(iii) devem apresentar data de publicação durante o ano de 2023;
+(iv) não devem apresentar sinopse.
+*/
+
+-- inserindo dados na tabela autor
+INSERT INTO autor VALUES(1, 'João');
+INSERT INTO autor VALUES(2, 'Maria');
+INSERT INTO autor VALUES(3, 'Jack');
+INSERT INTO autor VALUES(4, 'Pedro');
+INSERT INTO autor VALUES(5, 'Mateus');
+INSERT INTO autor VALUES(6, 'Jackson');
+INSERT INTO autor VALUES(7, 'Ana');
+INSERT INTO autor VALUES(8, 'Bernardo');
+INSERT INTO autor VALUES(9, 'Luíza');
+INSERT INTO autor VALUES(10, 'Patrick');
+
+-- inserindo dados na tabela editora
+INSERT INTO editora VALUES(1, 'Editora 1');
+INSERT INTO editora VALUES(2, 'Editora 2');
+INSERT INTO editora VALUES(3, 'Editora 3');
+INSERT INTO editora VALUES(4, 'Editora 4');
+INSERT INTO editora VALUES(5, 'Editora 5');
+
+-- inserindo dados na tabela tipo_obra
+INSERT INTO tipo_obra VALUES(1, 'Livro');
+INSERT INTO tipo_obra VALUES(2, 'Monografia');
+INSERT INTO tipo_obra VALUES(3, 'Mapa');
+INSERT INTO tipo_obra VALUES(4, 'filme');
+
+-- inserindo dados na tabela obra
+INSERT INTO obra VALUES(1, 'Obra 1', 'Edição 1', '2023-01-01', 'Uma aventura com muita ação', 4, 2);
+INSERT INTO obra VALUES(4, 'Obra 4', 'Edição 4', '2024-06-23', 'Mistérios em uma casa abandonada', 1, 5);
+INSERT INTO obra VALUES(7, 'Obra 7', 'Edição 7', '2023-10-15', 'Pesquisa sobre Banco de Dados', 2, 1);
+
+-- inserindo dados na tabela obra sem edição 	
+INSERT INTO obra(cd_obra, nm_titulo, dt_publicacao, ds_sinopse, tp_obra, cd_editora)
+	VALUES(2, 'Obra 2', '2023-04-18', 'Uma corrida com os mais velozes e furiosos', 4, 4);
+INSERT INTO obra(cd_obra, nm_titulo, dt_publicacao, ds_sinopse, tp_obra, cd_editora)
+	VALUES(5, 'Obra 5', '2024-08-04', 'Pesquisa sobre animais', 2, 3);
+INSERT INTO obra(cd_obra, nm_titulo, dt_publicacao, ds_sinopse, tp_obra, cd_editora)
+	VALUES(8, 'Obra 8', '2024-03-08', 'Uma competição entre os atletas mais velozes e mais furiosos', 4, 1);
+	
+-- inserindo dados na tabela obra sem sinopse	
+INSERT INTO obra(cd_obra, nm_titulo, ds_edicao, dt_publicacao, tp_obra, cd_editora)
+	VALUES(3, 'Obra 3', 'Edição 3', '2023-12-22', 1, 4);
+INSERT INTO obra(cd_obra, nm_titulo, ds_edicao, dt_publicacao, tp_obra, cd_editora)
+	VALUES(6, 'Obra 6', 'Edição 6', '2024-05-06', 3, 3);
+INSERT INTO obra(cd_obra, nm_titulo, ds_edicao, dt_publicacao, tp_obra, cd_editora)
+	VALUES(9, 'Obra 9', 'Edição 9', '2024-07-14', 2, 5);
+
+-- inserindo dados na tabela obra sem edição e sem sinopse
+INSERT INTO obra(cd_obra, nm_titulo, dt_publicacao, tp_obra, cd_editora)
+	VALUES(10, 'Obra 10', '2023-09-30', 4, 2);
+	
+-- inserindo dados na tabela obra_autor
+INSERT INTO obra_autor VALUES (1, 10);
+INSERT INTO obra_autor VALUES (2, 9);
+INSERT INTO obra_autor VALUES (3, 8);
+INSERT INTO obra_autor VALUES (4, 7);
+INSERT INTO obra_autor VALUES (5, 6);
+INSERT INTO obra_autor VALUES (6, 5);
+INSERT INTO obra_autor VALUES (7, 4);
+INSERT INTO obra_autor VALUES (8, 3);
+INSERT INTO obra_autor VALUES (9, 2);
+INSERT INTO obra_autor VALUES (10, 1);
+INSERT INTO obra_autor VALUES (5, 8);
+INSERT INTO obra_autor VALUES (7, 2);
+INSERT INTO obra_autor VALUES (8, 9);
+	 
+/*
+d) Listar o nome dos autores em ordem alfabética;
+*/
+
+SELECT a.nm_autor AS "autor"
+FROM autor a
+ORDER BY a.nm_autor; -- = ORDER BY nm_autor ASC;
+-- ORDER BY nm_autor DESC;
+-- ORDER BY "autor";
+
+/*
+e) Listar os dados (título e edição) das obras que foram publicadas no ano de 2023 (dica: "2023-01-01" a "2023-12-31")
+*/
+
+SELECT o.nm_titulo AS titulo, o.ds_edicao AS "edição"
+FROM obra o
+WHERE dt_publicacao BETWEEN '2023-01-01' AND '2023-12-31';
+
+/*
+f) Listar o título da(s) obra(s) que não apresenta informação sobre a edição (ds_edicao);
+*/
+
+SELECT o.nm_titulo AS "título"
+FROM obra o
+WHERE o.ds_edicao IS NULL;
+
+/*
+g) Listar o título da(s) obra(s) que é (são) livros (tp_obra);
+*/
+
+SELECT nm_titulo AS "título"
+FROM obra
+WHERE tp_obra = 1;
+-- WHERE tp_obra IN (1, 3);
+-- WHERE tp_obra NOT IN (1, 3);
+
+/*
+h) Listar o título da(s) obra(s) que não apresenta(m) sinopse cadastrada e que apresenta(m) editora associada.
+*/
+
+SELECT nm_titulo AS "título"
+FROM obra
+WHERE ds_sinopse IS NULL -- OR ds_sinopse = '')
+	AND ds_edicao IS NOT NULL;
+
+/*
+i) Listar o(s) nome(s) do(s) autor(es) que apresenta(m) a palavra "Jack" na sua composição (nm_ator).
+*/
+
+SELECT nm_autor AS "autor"
+FROM autor
+WHERE nm_autor LIKE '%Jack%';
+
+/*
+j) Listar o(s) nome(s) do(s) filme(s) que contém as palavras "furiosos" e "velozes" na sinopse.
+*/
+
+SELECT nm_titulo AS "título"
+FROM obra
+WHERE ds_sinopse LIKE '%furiosos%' AND ds_sinopse LIKE '%velozes%'; 

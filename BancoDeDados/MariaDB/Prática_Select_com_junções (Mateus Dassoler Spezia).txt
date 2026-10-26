@@ -1,0 +1,115 @@
+-- utilizando o script de apoio
+
+-- 1. Selecione os nomes dos clientes e os respectivos nomes dos animais cadastrados.
+SELECT c.nm_cliente
+	,a.nm_animal
+FROM cliente c, animal a
+WHERE c.cd_cliente = a.cd_cliente;
+
+-- 2. Liste os detalhes dos produtos e as descrições de suas categorias.
+SELECT p.ds_produto
+	,ca.ds_categoria
+FROM produto p, categoria ca
+WHERE p.cd_categoria = ca.cd_categoria;
+ 
+-- 3. Mostre os agendamentos com as informações do prestador de serviço associado.
+SELECT ag.nr_agendamento
+	,ag.dt_agendamento
+	,ag.hr_agendamento
+	,ps.nm_prestador
+	,ps.nr_telefone
+	,ps.ds_email
+	,ps.cd_endereco
+FROM agendamento ag, prestador_servico ps
+WHERE ag.cd_prestador = ps.cd_prestador;
+
+-- 4. Liste os serviços agendados e as descrições de cada serviço.
+SELECT ags.nr_agendamento
+	,s.ds_servico
+	,ags.qt_servico
+	,ags.vl_servico
+FROM agendamento_servico ags, servico s
+WHERE ags.cd_servico = s.cd_servico;
+
+-- 5. Selecione os nomes dos prestadores e os serviços que eles prestam.
+SELECT ps.nm_prestador
+	,s.ds_servico
+FROM prestador_servico ps, servico s, servico_prestador sp
+WHERE ps.cd_prestador = sp.cd_prestador AND s.cd_servico = sp.cd_servico;
+
+-- 6. Mostre as notas fiscais e os nomes dos clientes que as receberam.
+SELECT nf.nr_notal_fiscal
+	,nf.dt_emissao
+	,nf.vl_total
+	,c.nm_cliente
+FROM nota_fiscal nf, cliente c
+WHERE nf.cd_cliente = c.cd_cliente;
+
+-- 7. Liste os itens de nota fiscal e os respectivos nomes dos produtos.
+SELECT inf.nr_notal_fiscal
+	,p.nm_produto 
+FROM item_nota_fiscal inf, produto p
+WHERE inf.cd_produto = p.cd_produto;
+
+-- 8. Selecione os nomes dos animais, suas raças e suas respectivas espécies.
+SELECT a.nm_animal
+	,r.nm_raca
+	,e.nm_especie
+FROM animal a, raca r, especie e
+WHERE a.cd_raca = r.cd_raca AND r.cd_especie = e.cd_especie;
+
+-- 9. Mostre os agendamentos e os nomes dos clientes e animais associados.
+SELECT ag.nr_agendamento
+	,ag.dt_agendamento
+	,ag.hr_agendamento
+	,c.nm_cliente
+	,a.nm_animal
+	,a.ds_animal
+	,a.tp_porte
+FROM agendamento ag, cliente c, animal a
+WHERE ag.cd_cliente = c.cd_cliente AND ag.cd_animal = a.cd_animal;
+
+-- 10. Liste os endereços dos clientes, mostrando o logradouro e o município.
+SELECT c.nm_cliente
+	,en.ds_logradouro
+	,m.nm_municipio
+FROM endereco en, municipio m, cliente c
+WHERE c.cd_endereco = en.cd_endereco AND en.cd_municipio = m.cd_municipio;
+
+-- 11. Selecione os prestadores de serviço e os municípios em que seus endereços estão localizados.
+SELECT ps.nm_prestador
+	,m.nm_municipio
+FROM prestador_servico ps, municipio m, endereco en
+WHERE ps.cd_endereco = en.cd_endereco AND en.cd_municipio = m.cd_municipio;
+
+-- 12. Mostre as notas fiscais e os produtos comprados, junto com as quantidades e valores.
+SELECT nf.nr_notal_fiscal
+	,nf.dt_emissao
+	,p.nm_produto
+	,inf.qt_produto
+	,inf.vl_produto
+FROM item_nota_fiscal inf, produto p, nota_fiscal nf
+WHERE inf.cd_produto = p.cd_produto AND inf.nr_notal_fiscal = nf.nr_notal_fiscal;
+
+-- 13. Liste os agendamentos e os serviços prestados, mostrando os valores totais dos serviços agendados.
+SELECT ag.nr_agendamento
+	,ag.dt_agendamento
+	,ag.hr_agendamento
+	,s.ds_servico
+	,ags.vl_servico
+FROM agendamento ag, servico s, agendamento_servico ags
+WHERE ags.cd_servico = s.cd_servico AND ags.nr_agendamento = ag.nr_agendamento;
+
+-- 14. Selecione os prestadores de serviço que realizam serviços de valor superior a R$ 100,00.
+SELECT ps.nm_prestador
+	,s.ds_servico
+	,s.vl_servico
+FROM prestador_servico ps, servico s, servico_prestador sp
+WHERE sp.cd_prestador = ps.cd_prestador AND sp.cd_servico = s.cd_servico AND s.vl_servico > 100;
+
+-- 15. Liste os animais, suas raças e as espécies a que pertencem, filtrando apenas as raças com nome "Poodle".
+SELECT a.nm_animal
+	,r.nm_raca
+	,e.nm_especie
+FROM animal a, raca r, especie e
+WHERE a.cd_raca = r.cd_raca AND r.cd_especie = e.cd_especie AND r.nm_raca LIKE '%poodle%';

@@ -1,0 +1,35 @@
+						Plano de Testes:
+
+CASO |         DESCRIÇÃO	   |		     ENTRADA		      |	        SAÍDA ESPERADA		|
+_____|_____________________________|__________________________________________|_________________________________|
+1    | Verificar se um arquivo é   |   Caminho: "caminho/arquivo.poo”,	      |	 Arquivo salvo com sucesso.     |
+     | salvo corretamente.	   |   Texto: “Teste de salvar”,              |					|
+     |				   |   Documento: StyledDocument com estilos. |					|
+     |				   |					      |					|
+     | 				   |					      |					|
+2    | Verificar se um arquivo	   |   Caminho: "caminho/inexistente.poo”     |	 existearquivo(caminho) = false |
+     | inexistente retorna falso   |   					      |					|
+     | ao verificar sua existência | 					      |					|
+     |				   |  					      |					|
+     |				   | 	 	  	 	    	      |					|
+3    | Verificar se um arquivo	   |   Caminho: "caminho/existente.poo”	      |  existearquivo(caminho) = true  |
+     | existente retorna           |   				              |					|
+     | verdadeiro ao verificar     |					      |					|
+     | sua existência.             |	 	  	 		      |					|
+     |				   |	 	   	    	  	      |					|
+     |				   |                                          |					|
+4    | Verificar se um arquivo é   |   Caminho: "caminho arquivo. poo”	      |	 Texto e estilos recuperados	|
+     | carregado corretamente.     |					      |  no JTextPane.		        |
+     |				   |                                          |					|
+     |				   |                                          |					|
+5    | Verificar tratamento de	   |   Caminho: "caminho/inexistente.poo”     |  Exceção tratada com		|
+     | exceções ao tentar abrir    |   					      |	 mensagem de erro exibida.	|	
+     | um arquivo inexistente.	   |					      |					|
+     |				   |                                          |					|
+     |				   |                                          |					|
+6    | Verificar se a classe	   |   Texto: “Texto Teste", Documento:	      |	 Objeto Serializacao com os	|
+     | Serializacao armazena	   |   StyledDocument com estilos.            |  valores corretos recuperados.	|
+     | e recupera corretamente     |   				              |					|
+     | o texto e os estilos.	   |			                      |					|
+
+

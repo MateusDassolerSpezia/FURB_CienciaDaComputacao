@@ -1,0 +1,120 @@
+-- comentário de linha
+/*
+comentário de bloco
+*/
+
+-- criando uma tabela teste
+CREATE TABLE teste1 (
+cd_teste INTEGER,
+ds_teste VARCHAR(50),
+dt_teste DATE,
+vl_teste DECIMAL(8,2)
+);
+
+-- alteração de coluna - tamanho
+ALTER TABLE teste1
+MODIFY ds_teste VARCHAR(100);
+
+-- alteração de tabela adicionando coluna
+ALTER TABLE teste1
+ADD COLUMN fl_fumaca CHAR(1);
+
+-- alteração de tabela remoção de coluna
+ALTER TABLE teste1
+DROP COLUMN dt_teste;
+
+-- eliminando todos os dados da tabela
+TRUNCATE TABLE teste1;
+
+-- excluindo uma tabela (dados e estrutura)
+DROP TABLE teste1;
+
+
+
+-- descrevendo uma tabela
+DESC teste1;
+
+-- inserindo um registro
+INSERT INTO teste1 (cd_teste, ds_teste, dt_teste, vl_teste)
+	    VALUES(1, 'descrição 1', '2024-10-09', 111.11);
+			   
+-- selecionando dados da tabela
+SELECT * FROM teste1;
+
+--------------------------------------------------------------
+
+-- criação da tabela genero
+CREATE TABLE genero (
+cd_genero INTEGER,
+ds_genero VARCHAR(30)
+);
+
+-- criação tabela censura
+CREATE TABLE censura (
+cd_censura INTEGER,
+ds_censura VARCHAR(30)
+);
+
+-- criação da tabela ator
+CREATE TABLE ator (
+cd_ator INTEGER,
+nm_ator VARCHAR(50)
+);
+
+-- criação tabela filme
+CREATE TABLE filme (
+cd_filme INTEGER,
+cd_censura INTEGER,
+cd_genero INTEGER,
+nm_filme VARCHAR(50),
+ds_sinopse VARCHAR(250),
+nr_duracao VARCHAR(20),
+dt_lancamento DATE,
+fl_dublado CHAR(1)
+);
+
+-- criação da tabela filme_ator
+CREATE TABLE filme_ator (
+cd_filme INTEGER,
+cd_ator INTEGER
+);
+
+
+
+-- adicionando PK e FKs
+
+/*ALTER TABLE genero
+ADD PRIMARY KEY (cd_genero);*/
+
+-- ou
+
+ALTER TABLE genero
+ADD CONSTRAINT genero_pk PRIMARY KEY (cd_genero);
+
+ALTER TABLE censura
+ADD PRIMARY KEY (cd_censura);
+
+ALTER TABLE ator
+ADD PRIMARY KEY (cd_ator);
+
+ALTER TABLE filme 
+ADD PRIMARY KEY (cd_filme);
+
+ALTER TABLE filme_ator
+ADD PRIMARY KEY(cd_filme, cd_ator); -- esta PK é composta 
+
+-- adicionando as FKs
+ALTER TABLE filme
+ADD FOREIGN KEY(cd_genero) REFERENCES genero(cd_genero);
+
+ALTER TABLE filme
+ADD CONSTRAINT filme_cesura_fk
+FOREIGN KEY(cd_censura) REFERENCES censura(cd_censura);
+
+ALTER TABLE filme_ator
+ADD FOREIGN KEY(cd_filme) REFERENCES filme(cd_filme),
+ADD FOREIGN KEY(cd_ator) REFERENCES ator(cd_ator);
+
+-- alterando o nome de uma coluna
+ALTER TABLE ator
+change COLUMN nm_ator nome_ator VARCHAR(50);
