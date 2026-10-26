@@ -1,0 +1,31 @@
+-- criação da tabela departamento
+CREATE TABLE departamento
+(cd_departamento INTEGER,
+nm_departamento VARCHAR(50),
+vl_orcamento DECIMAL(8,2),
+PRIMARY KEY(cd_departamento)
+);
+-- inserindo linhas nas tabela
+INSERT INTO departamento VALUES (100,'Marketing',10000);
+INSERT INTO departamento VALUES (110,'Manutenção',12000);
+INSERT INTO departamento VALUES (120,'pesquisa',7000);
+-- recuperando os dados da tabela
+SELECT * FROM departamento;
+
+----------------------------------------------------------------
+
+-- criação da tabela funcionário
+CREATE TABLE funcionario
+(cd_funcionario INTEGER,
+cd_departamento INTEGER, -- esta coluna é a FK para depto
+nm_funcionario VARCHAR(50),
+PRIMARY KEY(cd_funcionario) -- indica a PK da tabela
+FOREIGN KEY(cd_departamento) REFERENCES
+	departamento(cd_departamento) -- fazendo a referência
+);
+-- inserindo dados na tabela funcinário
+INSERT INTO funcionario VALUES(1001,100,'José');
+INSERT INTO funcionario VALUES(1002,100,'Maria');
+INSERT INTO funcionario VALUES(1003,110,'Paulo');
+-- selecionando dados da tabela funcionário
+SELECT * FROM funcionario;

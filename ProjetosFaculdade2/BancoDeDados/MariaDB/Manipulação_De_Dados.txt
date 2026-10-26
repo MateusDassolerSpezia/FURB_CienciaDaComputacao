@@ -1,0 +1,52 @@
+-- criação de uma tabela para testes
+CREATE TABLE pessoa (
+cd_pessoa INTEGER,
+nm_pessoa VARCHAR(50) NOT NULL,
+ds_email VARCHAR(50) UNIQUE,
+fl_ativo CHAR(1) DEFAULT 'S',
+dt_nascimento DATE,
+PRIMARY KEY (cd_pessoa)
+);
+
+-- inserindo sem identificação das colunas
+INSERT INTO pessoa VALUES (1, 'pessoa 1', 'pessoa1@gmail.com', NULL, '2000-01-31');
+
+-- inserindo com identificação das colunas
+INSERT INTO pessoa (nm_pessoa, ds_email, dt_nascimento)
+	VALUES ('pessoa 4', 'pessoa4@gmail.com', '2001-12-31');
+
+-- alterando a tabela para adicionar auto_increment
+ALTER TABLE pessoa
+	MODIFY COLUMN cd_pessoa INTEGER AUTO_INCREMENT;
+
+-- alterando a tabela pessoa para controlar o fl_ativo
+ALTER TABLE pessoa
+	MODIFY COLUMN fl_ativo CHAR(1) CHECK (fl_ativo IN ('S', 'N'));
+	
+-- ou?
+	
+/*
+ALTER TABLE pessoa
+	ADD CONSTRAINT pessoa_check_fl_ativo CHECK (fl_ativo IN ('S', 'N', 'I'))
+*/
+
+-- alterando dados da tabela pessoa
+UPDATE pessoa
+	SET nm_pessoa = 'pessoa 66',
+	    ds_email = 'pessoa66@gmail.com'
+	WHERE cd_pessoa = 4; -- atenção, procure verificar sempre a condição utilizada
+
+-- eliminando dados de pessoa
+DELETE FROM pessoa
+	WHERE cd_pessoa = 4; -- ou -- nm_pessoa = 'pessoa 66';
+
+
+
+
+
+
+
+-- descrevendo a tabela
+DESC pessoa;
+-- selecionando dados da tabela
+SELECT * FROM pessoa;

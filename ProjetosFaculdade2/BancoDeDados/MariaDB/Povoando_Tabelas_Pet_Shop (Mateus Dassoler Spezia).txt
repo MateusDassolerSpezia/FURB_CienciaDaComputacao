@@ -1,0 +1,101 @@
+-- inserindo dados na tabela municipio
+INSERT INTO municipio VALUES (1, 'Blumenau', 'SC');
+INSERT INTO municipio VALUES (2, 'Gaspar', 'SC');
+INSERT INTO municipio VALUES (3, 'São Paulo', 'SP');
+INSERT INTO municipio VALUES (4, 'Rio de Janeiro', 'RJ');
+INSERT INTO municipio VALUES (5, 'Manaus', 'AM');
+
+-- inserindo dados na tabela endereco
+INSERT INTO endereco VALUES (1, 'Rua Benjamin Constant', 'Casa', 'Bairro Escola Agrícola', '12345678', 1);
+INSERT INTO endereco VALUES (2, 'Rua Gaspar', 'Apartamento', 'Bairro Gasparzinho', '87654321', 2);
+INSERT INTO endereco VALUES (3, 'Rua São Paulo', 'Casa', 'Bairro São Paulinho', '18273645', 3);
+INSERT INTO endereco VALUES (4, 'Rua Rio', 'Casa', 'Bairro Janeiro', '81726354', 4);
+INSERT INTO endereco VALUES (5, 'Rua Manaus', 'Apartamento', 'Bairro Amazonas', '43218765', 5);
+
+-- inserindo dados na tabela categoria
+INSERT INTO categoria VALUES (1, 'Roupas');
+INSERT INTO categoria VALUES (2, 'Calçados');
+INSERT INTO categoria VALUES (3, 'Eletroeletrônicos'); -- esqueci que era um PetShop
+INSERT INTO categoria VALUES (4, 'Perfumaria e cosméticos');
+INSERT INTO categoria VALUES (5, 'Comidas e bebidas');
+
+-- inserindo dados na tabela produto
+INSERT INTO produto VALUES (1, 'Sapato social', 'um sapato muito social', 10000, 29990, 8, 2);
+INSERT INTO produto VALUES (2, 'Bolo de chocolate', 'um bolo bem chocolatudo', 4000, 9000, 3, 5);
+INSERT INTO produto VALUES (3, 'Perfume premium', 'um perfume super premium', 1500, 20000, 5, 4); -- esqueci que era um PetShop
+INSERT INTO produto VALUES (4, 'Calça jeans', 'uma calça 100% jeans', 5000, 14999, 10, 1);
+INSERT INTO produto VALUES (5, 'iPhone 16 Pro Max', 'O iPhone mais atual', 2635, 12499, 12, 3); -- valores corretos
+
+-- inserindo dados na tabela especie
+INSERT INTO especie VALUES (1, 'Espécie Canis lupus familiaris');
+INSERT INTO especie VALUES (2, 'Felis catus');
+
+-- inserindo dados na tabela raca
+INSERT INTO raca VALUES (1, 'Beagle', 1);
+INSERT INTO raca VALUES (2, 'Shih Tzu', 1);
+INSERT INTO raca VALUES (3, 'Siamês', 2);
+INSERT INTO raca VALUES (4, 'Pastor-alemão', 1);
+INSERT INTO raca VALUES (5, 'Persa', 2);
+
+-- inserindo dados na tabela servico
+INSERT INTO servico VALUES (1, 'Banho', 80);
+INSERT INTO servico VALUES (2, 'Banho e tosa higiênica', 130);
+INSERT INTO servico VALUES (3, 'Hospedagem', 50);
+INSERT INTO servico VALUES (4, 'Adestramento', 70);
+INSERT INTO servico VALUES (5, 'Tosa', 60);
+
+-- inserindo dados na tabela cliente
+INSERT INTO cliente VALUES (1, 'Pedro', '(47)99988-7766', 'pedro@gamil.com', '2000-10-09', 1);
+INSERT INTO cliente VALUES (2, 'Maria', '(47)98877-9966', 'maria@gamil.com', '1995-12-15', 2);
+INSERT INTO cliente VALUES (3, 'João', '(11)96677-8899', 'joao@gamil.com', '2002-07-11', 3);
+INSERT INTO cliente VALUES (4, 'Ana', '(21)91234-5678', 'ana@gamil.com', '1998-05-22', 4);
+INSERT INTO cliente VALUES (5, 'José', '(92)98765-4321', 'jose@gamil.com', '1990-03-05', 5);
+
+-- inserindo dados na tabela animal
+INSERT INTO animal VALUES (1, 'Walter', 'Preguiçoso', '2014-03-12', 'M', 1, 1);
+INSERT INTO animal VALUES (2, 'Luna', 'Carinhosa', '2012-11-15', 'P', 2, 2);
+INSERT INTO animal VALUES (3, 'Snow', 'Arisco', '2016-05-16', 'P', 3, 3);
+INSERT INTO animal VALUES (4, 'Thunder', 'Educado', '2015-04-27', 'G', 4, 4);
+INSERT INTO animal VALUES (5, 'Mia', 'Calma', '2019-01-04', 'P', 5, 5);
+
+-- inserindo dados na tabela nota_fiscal
+INSERT INTO nota_fiscal VALUES (1, '2024-10-22', 50, 1); --
+INSERT INTO nota_fiscal VALUES (2, '2024-10-20', 60, 2); --
+INSERT INTO nota_fiscal VALUES (3, '2024-10-15', 70, 3); -- valores errados
+INSERT INTO nota_fiscal VALUES (4, '2024-10-12', 130, 4); --
+INSERT INTO nota_fiscal VALUES (5, '2024-09-25', 80, 5); --
+
+-- inserindo dados na tabela item_nota_fiscal
+INSERT INTO item_nota_fiscal VALUES (1, 1, 1, 29990);
+INSERT INTO item_nota_fiscal VALUES (2, 3, 2, 20000);
+INSERT INTO item_nota_fiscal VALUES (3, 5, 1, 12499);
+INSERT INTO item_nota_fiscal VALUES (4, 2, 3, 9000);
+INSERT INTO item_nota_fiscal VALUES (5, 4, 2, 14999);
+
+-- inserindo dados na tabela prestador_servido
+INSERT INTO prestador_servico VALUES (1, 'Marcos', '(47)90022-3344', 'marcos@gmail.com', 1);
+INSERT INTO prestador_servico VALUES (2, 'Júlia', '(47)92233-2345', 'julia@gmail.com', 2);
+INSERT INTO prestador_servico VALUES (3, 'Mateus', '(11)91245-7643', 'mateus@gmail.com', 3);
+INSERT INTO prestador_servico VALUES (4, 'Laura', '(21)95623-5276', 'laura@gmail.com', 4);
+INSERT INTO prestador_servico VALUES (5, 'Bernardo', '(92)99812-3124', 'bernardo@gmail.com', 5);
+
+-- inserindo dados na tabela servico_prestador
+INSERT INTO servico_prestador VALUES (1, 3);
+INSERT INTO servico_prestador VALUES (2, 5);
+INSERT INTO servico_prestador VALUES (3, 4);
+INSERT INTO servico_prestador VALUES (4, 2);
+INSERT INTO servico_prestador VALUES (5, 1);
+
+-- inserindo dados na tabela agendamento
+INSERT INTO agendamento VALUES (1, '2024-10-27', '10:00:00', 1);
+INSERT INTO agendamento VALUES (2, '2024-10-30', '10:00', 2);
+INSERT INTO agendamento VALUES (3, '2024-11-17', '15:00', 3);
+INSERT INTO agendamento VALUES (4, '2024-11-04', '16:30', 4);
+INSERT INTO agendamento VALUES (5, '2024-11-11', '08:00', 5);
+
+-- inserindo dados na tabela agendamento_servico
+INSERT INTO agendamento_servico VALUES (1, 3, 1, 50);
+INSERT INTO agendamento_servico VALUES (2, 5, 1, 60);
+INSERT INTO agendamento_servico VALUES (3, 4, 1, 70);
+INSERT INTO agendamento_servico VALUES (4, 2, 1, 130);
+INSERT INTO agendamento_servico VALUES (5, 1, 1, 80);

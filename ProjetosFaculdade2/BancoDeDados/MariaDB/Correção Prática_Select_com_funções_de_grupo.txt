@@ -1,0 +1,146 @@
+-- Exemplos:
+SELECT MIN(a.nm_animal) AS data_nascimento
+FROM animal a;
+
+SELECT MAX(a.nm_animal) AS data_nascimento
+FROM animal a;
+
+SELECT MAX(p.vl_venda) "maior valor preço"
+FROM produto p;
+
+SELECT nf.dt_emissao
+		,COUNT(*)
+		,SUM(nf.vl_total) total_notas
+		,MAX(nf.vl_total) AS maior
+		,MIN(nf.vl_total) menor
+		,ROUND(AVG(nf.vl_total),2) AS media
+FROM nota_fiscal nf
+-- WHERE nf.dt_emissao BETWEEN '2024-09-15' AND '2024-09-30'
+GROUP BY nf.dt_emissao;
+
+SELECT nf.dt_emissao
+		,COUNT(*)
+		,SUM(nf.vl_total) total_notas
+FROM nota_fiscal nf
+GROUP BY nf.dt_emissao
+HAVING SUM(nf.vl_total) > 700 AND COUNT(*) > 2;
+
+SELECT COUNT(*)
+		,SUM(nf.vl_total) / COUNT(*)
+		,AVG(nf.vl_total) meida_por_periodo
+FROM nota_fiscal nf
+WHERE nf.dt_emissao BETWEEN '2024-09-01' AND '2024-09-30';
+
+
+-- utilizando o script de apoio:
+
+INSERT INTO agendamento VALUES(21,'2024-11-10','10:00:00',1,1,20)
+INSERT INTO agendamento VALUES(22,'2024-11-11','11:00:00',1,1,1)
+
+-- 1. Contar quantos animais são de pequeno porte.
+SELECT COUNT(a.tp_porte) AS 'Pequeno porte'
+FROM animal a
+WHERE a.tp_porte = 'p';
+
+-- 2. Listar o valor total de notas fiscais emitidas por mês.
+SELECT MONTH(nf.dt_emissao) AS 'Mês'
+		,COUNT(nf.nr_notal_fiscal) AS 'Notas fiscais emitidas no mês'
+FROM nota_fiscal nf
+GROUP BY MONTH(nf.dt_emissao);
+
+-- 3. Listar o total de agendamentos realizados por cada prestador de serviço.
+SELECT ps.nm_prestador AS 'Prestador de serviço'
+		,COUNT(a.nr_agendamento) AS 'Total de agendamentos realizados'
+FROM prestador_servico ps, agendamento a
+WHERE a.cd_prestador = ps.cd_prestador
+GROUP BY ps.nm_prestador;
+
+-- 4. Calcular o valor total dos serviços prestados por cada agendamento.
+SELECT a.nr_agendamento AS 'Nr do  agendamento'
+		,SUM(ags.vl_servico*ags.qt_servico) AS 'Valor total dos serviços prestados'
+FROM agendamento a, agendamento_servico ags
+WHERE a.nr_agendamento = ags.nr_agendamento
+GROUP BY a.nr_agendamento;
+
+-- 5. Calcular a média de idade dos animais de cada raça.
+SELECT r.nm_raca AS 'Raça'
+		,AVG(truncate(DATEDIFF(CURDATE(),a.dt_nascimento)/365,0)) AS 'Média de idade'
+FROM animal a, raca r
+WHERE a.cd_raca = r.cd_raca
+GROUP BY r.cd_raca;
+
+-- 6. Listar o total de produtos cadastrados por categoria.
+SELECT c.ds_categoria AS 'Categoria'
+		,COUNT(p.cd_produto) 'Produtos cadastrados'
+FROM produto p, categoria c
+WHERE p.cd_categoria = c.cd_categoria
+GROUP BY c.cd_categoria;
+
+-- 7. Listar as cidades com o número de clientes cadastrados, ordenando pelo maior número.
+SELECT m.nm_municipio AS 'Cidade'
+		,COUNT(c.cd_cliente) AS 'Número de clientes'
+FROM municipio m, endereco e, cliente c
+WHERE m.cd_municipio = e.cd_endereco AND e.cd_endereco = c.cd_endereco
+GROUP BY m.cd_municipio
+ORDER BY COUNT(c.cd_cliente) DESC;
+
+-- 8. Calcular o valor total de vendas para cada cliente em notas fiscais.
+SELECT c.nm_cliente AS 'Cliente'
+		,SUM(nf.vl_total) AS 'Total de vendas'
+FROM cliente c, nota_fiscal nf
+WHERE c.cd_cliente = nf.cd_cliente
+GROUP BY c.cd_cliente;
+
+-- 9. Obter o nome do prestador de serviço com o número de agendamentos.
+SELECT ps.nm_prestador
+		,COUNT(ag.nr_agendamento)
+FROM prestador_servico ps, agendamento ag
+WHERE ag.cd_prestador = ps.cd_prestador
+GROUP BY ps.nm_prestador;
+
+-- 10. Calcular a receita total de serviços prestados por cada prestador.
+SELECT ps.nm_prestador 
+		,SUM(ags.vl_servico * ags.qt_servico)
+FROM prestador_servico ps, agendamento_servico ags, agendamento ag
+WHERE ags.nr_agendamento = ag.nr_agendamento AND ag.cd_prestador = ps.cd_prestador
+GROUP BY ps.cd_prestador;
+
+-- 11. Calcular o valor médio dos produtos vendidos por categoria.
+SELECT c.ds_categoria AS 'Categoria'
+		,AVG(p.vl_venda) AS 'Valor médio de venda'
+FROM produto p, categoria c
+WHERE p.cd_categoria = c.cd_categoria
+GROUP BY c.ds_categoria;
+
+-- 12. Listar os clientes que realizaram mais de 5 agendamentos.
+SELECT c.nm_cliente
+		,COUNT(ag.nr_agendamento)
+FROM cliente c, agendamento ag
+WHERE c.cd_cliente = ag.cd_cliente
+GROUP BY c.cd_cliente
+HAVING COUNT(ag.nr_agendamento) > 5;
+
+-- 13. Calcular a receita média de cada prestador de serviço em agendamentos.
+SELECT ps.nm_prestador AS Prestador
+		,SUM(ags.vl_servico*ags.qt_servico) AS Total
+		,COUNT(ags.cd_servico) qtde_servico
+		,AVG(ags.vl_servico*ags.qt_servico) AS Media
+FROM agendamento a, agendamento_servico ags, prestador_servico ps
+WHERE ags.nr_agendamento = a.nr_agendamento AND a.cd_prestador = ps.cd_prestador
+GROUP BY ps.nm_prestador;
+
+-- 14. Listar as espécies com mais de 3 raças cadastradas.
+SELECT e.nm_especie AS 'Especie'
+		,COUNT(r.cd_raca) AS 'Total_animais'
+FROM especie e, raca r
+WHERE e.cd_especie = r.cd_especie
+GROUP BY e.cd_especie
+HAVING COUNT(r.cd_raca) > 3;
+
+-- 15. Listar os clientes que possuem mais de um animal cadastrado.
+SELECT c.nm_cliente AS 'Cliente'
+		,COUNT(a.cd_animal) AS 'Qtde_animais'
+FROM cliente c, animal a
+WHERE c.cd_cliente = a.cd_cliente
+GROUP BY c.cd_cliente
+HAVING COUNT(a.cd_animal) >  1;
