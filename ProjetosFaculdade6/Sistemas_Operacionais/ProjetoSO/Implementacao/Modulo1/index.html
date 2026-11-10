@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Simulações de concorrência e sincronização do Mini-SO.">
+  <title>Módulo 1 — Concorrência &amp; Sincronização</title>
+  <link rel="stylesheet" href="/modulo1/modulo1.css">
+  <script src="/modulo1/modulo1.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="back" href="/" aria-label="Voltar ao menu">← <span>Menu principal</span></a>
+    <div class="brand"><span class="brand-mark">OS</span><strong>Mini-SO</strong></div>
+    <span class="status"><i></i> núcleo online</span>
+  </header>
+
+  <main>
+    <section class="intro">
+      <div class="module-index">Módulo <strong>01</strong> / 05</div>
+      <div>
+        <span class="eyebrow">Concorrência · região crítica · sincronização</span>
+        <h1>Threads em<br><em>movimento.</em></h1>
+        <p>Execute cada cenário e observe como semáforos e locks coordenam o acesso concorrente sem espera ocupada, corrupção de dados ou deadlock.</p>
+      </div>
+      <div class="concepts" aria-label="Conceitos utilizados">
+        <span>Pthreads*</span><span>Mutex</span><span>Semáforos</span><span>Fair locks</span>
+        <small>*Representadas por threads nativas Java.</small>
+      </div>
+    </section>
+
+    <section class="lab" aria-labelledby="titulo-laboratorio">
+      <div class="section-title">
+        <span>Laboratório</span>
+        <h2 id="titulo-laboratorio">Selecione um experimento</h2>
+      </div>
+
+      <div class="experiment-grid">
+        <button class="experiment selected" type="button" data-simulation="produtor-consumidor" aria-pressed="true">
+          <span class="number">01</span>
+          <span class="symbol">⇄</span>
+          <strong>Produtor / Consumidor</strong>
+          <small>Buffer circular · 2 produtores · 2 consumidores</small>
+        </button>
+        <button class="experiment" type="button" data-simulation="filosofos" aria-pressed="false">
+          <span class="number">02</span>
+          <span class="symbol">⌁</span>
+          <strong>Jantar dos Filósofos</strong>
+          <small>5 threads · ordenação de recursos · sem deadlock</small>
+        </button>
+        <button class="experiment" type="button" data-simulation="leitores-escritores" aria-pressed="false">
+          <span class="number">03</span>
+          <span class="symbol">R/W</span>
+          <strong>Leitores / Escritores</strong>
+          <small>Leitura paralela · escrita exclusiva · acesso justo</small>
+        </button>
+      </div>
+
+      <button id="run-button" class="run" type="button">
+        <span class="run-icon" aria-hidden="true">▶</span>
+        <span><strong>Iniciar simulação</strong><small>executar no núcleo Java</small></span>
+      </button>
+    </section>
+
+    <section id="output" class="output" aria-live="polite" aria-labelledby="output-title">
+      <div class="output-head">
+        <div>
+          <span class="eyebrow">Saída da execução</span>
+          <h2 id="output-title">Terminal do módulo</h2>
+        </div>
+        <span id="execution-status" class="execution-status idle"><i></i> Aguardando</span>
+      </div>
+      <p id="result-description" class="result-description">Escolha um experimento e inicie a simulação para acompanhar os eventos concorrentes.</p>
+      <div id="summary" class="summary" hidden></div>
+      <pre id="terminal" tabindex="0"><code><span class="prompt">mini-so:~$</span> módulo 1 pronto para execução.</code></pre>
+    </section>
+
+    <section class="notes">
+      <span class="section-number">Decisões de projeto</span>
+      <div class="notes-grid">
+        <article><span>01</span><h3>Sem espera ocupada</h3><p>As threads são bloqueadas pelos próprios mecanismos de sincronização enquanto aguardam um recurso.</p></article>
+        <article><span>02</span><h3>Estado protegido</h3><p>Todo acesso de escrita a dados compartilhados acontece dentro de uma região crítica.</p></article>
+        <article><span>03</span><h3>Progresso garantido</h3><p>Ordenação de recursos e locks justos evitam deadlock e reduzem o risco de starvation.</p></article>
+      </div>
+    </section>
+  </main>
+
+  <footer><span>Mini-SO · Módulo 01</span><a href="/">Retornar ao painel ↑</a></footer>
+</body>
+</html>

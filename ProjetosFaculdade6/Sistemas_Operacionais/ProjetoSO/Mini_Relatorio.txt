@@ -1,0 +1,54 @@
+﻿MINI RELATÓRIO — DECISÕES DE PROJETO DO MINI-SO
+Mateus Dassoler Spezia e Vinícius Oneda
+
+1. LINGUAGEM DE PROGRAMAÇÃO UTILIZADA
+
+O núcleo foi desenvolvido em Java, com bibliotecas do JDK para concorrência,
+coleções e comunicação HTTP. A interface utiliza HTML, CSS e JavaScript,
+separando a apresentação dos algoritmos. Um script PowerShell automatiza a
+compilação e a inicialização. São necessários JDK 11 ou superior e navegador.
+
+2. ARQUITETURA DE INTEGRAÇÃO
+
+Os cinco módulos são organizados em pacotes próprios, com classes de
+simulação e de resultado. A classe MiniSO integra as telas e os algoritmos
+por um servidor HTTP local, que recebe solicitações e retorna dados em JSON.
+
+Fluxo: navegador -> API HTTP -> simulador Java -> JSON -> interface.
+
+Cada simulação mantém seu estado independente. Uma possível evolução seria
+um núcleo coordenador com tabela de processos compartilhada, conectando
+escalonamento, memória, recursos e operações de arquivos em uma mesma execução.
+
+3. DECISÕES E ASPECTOS RELEVANTES DO DESENVOLVIMENTO
+
+Concorrência: threads reais compartilham um buffer circular protegido por
+semáforos vazio/cheio e mutex, sem espera ocupada. Nos filósofos, a aquisição
+ordenada dos hashis previne deadlock. Leitores/escritores utiliza um lock
+justo para permitir leituras simultâneas, escrita exclusiva e evitar starvation.
+
+Escalonamento: a simulação controla estados dos processos e bloqueios por E/S.
+Implementa Round-Robin com quantum configurável e prioridades com aging,
+apresentando tempos de espera, turnaround e suas médias (TME e TMT).
+
+Memória virtual: a MMU traduz endereços por tabela de páginas, com páginas de
+256 bytes, page faults e swap simulado. FIFO e LRU podem ser comparados pela
+taxa de faltas de página, variando a quantidade de quadros físicos.
+
+Impasses: ciclos são detectados em grafos de recursos de instância única.
+O Banqueiro calcula Need = Max - Allocation e aprova uma concessão tentativa
+somente quando existe sequência segura para a conclusão dos processos.
+
+Sistema de arquivos: FAT encadeia blocos com marcador EOF e um bitmap controla
+o espaço livre. A exclusão permite reutilização; a criação verifica espaço
+antes de alocar. A consistência entre FAT, bitmap e diretório é conferida.
+
+O foco didático orientou cenários predefinidos, parâmetros selecionáveis e
+logs dos algoritmos. Memória, swap e disco são simulados em memória, sem
+persistência real de arquivos. A separação dos módulos facilita manutenção
+e comparação das políticas implementadas.
+
+A implementação mostrou como é complexa a criação de um Sistema Operacional, pois 
+nessa atividade fizemos apenas simulações individuais desses módulos, o que já
+apresentou certa complexidade, mas em um Sistema Operacional real, todos esses
+processos ocorrem em conjunto e ao mesmo tempo sem causar interferência entre eles.

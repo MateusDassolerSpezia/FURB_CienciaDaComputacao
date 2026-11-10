@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Simulação de sistema de arquivos FAT e gerenciamento de blocos do Mini-SO.">
+  <title>Módulo 5 — Sistema de Arquivos</title>
+  <link rel="stylesheet" href="/modulo5/modulo5.css">
+  <script src="/modulo5/modulo5.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="back" href="/" aria-label="Voltar ao menu">← <span>Menu principal</span></a>
+    <div class="brand"><span class="brand-mark">OS</span><strong>Mini-SO</strong></div>
+    <span class="status"><i></i> disco montado</span>
+  </header>
+
+  <main>
+    <section class="intro">
+      <div class="module-index">Módulo <strong>05</strong> / 05</div>
+      <div class="intro-copy">
+        <span class="eyebrow">FAT · blocos · bitmap · EOF</span>
+        <h1>Dados em<br><em>cadeia.</em></h1>
+        <p>Crie e remova arquivos enquanto a FAT encadeia blocos espalhados pelo disco e o bitmap acompanha cada espaço ocupado.</p>
+      </div>
+      <div class="disk-spec">
+        <span>Disco simulado</span><strong>32 × 64 B</strong><b>2 KB</b><small>2 blocos reservados<br>30 blocos de dados</small>
+      </div>
+    </section>
+
+    <section class="architecture" aria-labelledby="architecture-title">
+      <div class="section-heading">
+        <div><span class="section-number">Arquitetura</span><h2 id="architecture-title">Como o arquivo é encontrado</h2></div>
+        <p>O diretório guarda apenas o primeiro bloco. Cada posição da FAT aponta para o próximo até alcançar EOF.</p>
+      </div>
+      <div class="flow" aria-label="Fluxo de acesso a um arquivo">
+        <article><span>01</span><strong>Diretório</strong><small>/docs/arquivo.txt<br>primeiro bloco = 4</small></article><b>→</b>
+        <article><span>02</span><strong>FAT[4]</strong><small>próximo bloco = 9</small></article><b>→</b>
+        <article><span>03</span><strong>FAT[9]</strong><small>próximo bloco = 12</small></article><b>→</b>
+        <article class="end"><span>04</span><strong>FAT[12]</strong><small>marcador = EOF</small></article>
+      </div>
+      <div class="legend"><span><i class="reserved"></i>Reservado</span><span><i class="occupied"></i>Ocupado</span><span><i class="free"></i>Livre</span></div>
+    </section>
+
+    <section class="laboratory" aria-labelledby="lab-title">
+      <div class="section-heading light">
+        <div><span class="section-number">Laboratório</span><h2 id="lab-title">Escolha uma carga de operações</h2></div>
+        <p>Cada execução começa com um disco recém-formatado e termina com uma verificação de integridade.</p>
+      </div>
+      <div class="scenario-grid">
+        <button class="scenario selected" type="button" data-scenario="reuso" aria-pressed="true">
+          <span class="scenario-index">01 / Uso cotidiano</span><span class="scenario-icon">↻</span>
+          <strong>Alocação e reuso</strong><small>Cria diretórios e arquivos, exclui um deles e reutiliza seus blocos.</small>
+        </button>
+        <button class="scenario" type="button" data-scenario="lotacao" aria-pressed="false">
+          <span class="scenario-index">02 / Limite</span><span class="scenario-icon">!</span>
+          <strong>Disco cheio e rollback</strong><small>Fragmenta o disco e tenta criar um arquivo maior que o espaço disponível.</small>
+        </button>
+        <div class="parameters">
+          <span>Configuração fixa</span>
+          <dl><div><dt>Blocos</dt><dd>32</dd></div><div><dt>Bloco</dt><dd>64 bytes</dd></div><div><dt>Alocador</dt><dd>First-fit</dd></div><div><dt>Espaço livre</dt><dd>Bitmap</dd></div></dl>
+          <button id="run-button" class="run" type="button"><span>▶</span><strong>Executar operações</strong></button>
+        </div>
+      </div>
+    </section>
+
+    <section id="results" class="results" aria-live="polite" aria-labelledby="result-title">
+      <div class="results-head">
+        <div><span class="eyebrow">Estado final do disco</span><h2 id="result-title">Sistema aguardando</h2></div>
+        <span id="execution-status" class="execution-status idle"><i></i>Aguardando</span>
+      </div>
+      <p id="result-description">Execute um cenário para montar a FAT, o bitmap e a tabela de diretórios.</p>
+      <div id="summary" class="summary" hidden></div>
+
+      <div class="result-block">
+        <div class="block-title"><span>01</span><h3>Mapa de blocos do disco</h3></div>
+        <div id="disk-map" class="disk-map"><p>O mapa será preenchido após a execução.</p></div>
+      </div>
+
+      <div class="result-block">
+        <div class="block-title"><span>02</span><h3>Bitmap de espaço</h3></div>
+        <div id="bitmap" class="bitmap"><p>1 = ocupado · 0 = livre</p></div>
+      </div>
+
+      <div class="result-block">
+        <div class="block-title"><span>03</span><h3>Tabela de diretórios</h3></div>
+        <div class="table-wrapper"><table><thead><tr><th>Caminho</th><th>Tipo</th><th>Tamanho</th><th>Primeiro bloco</th><th>Cadeia FAT</th></tr></thead><tbody id="directory"><tr><td colspan="5" class="empty">Sem entradas.</td></tr></tbody></table></div>
+      </div>
+
+      <div class="result-block">
+        <div class="block-title"><span>04</span><h3>Tabela FAT</h3></div>
+        <div class="table-wrapper fat-scroll"><table><thead><tr><th>Bloco</th><th>Estado</th><th>FAT / Próximo</th><th>Proprietário</th></tr></thead><tbody id="fat"><tr><td colspan="4" class="empty">Sem dados.</td></tr></tbody></table></div>
+      </div>
+
+      <div class="result-block">
+        <div class="block-title"><span>Log</span><h3>Operações do sistema de arquivos</h3></div>
+        <pre id="terminal" tabindex="0"><code><span class="prompt">fat:/$</span> disco pronto para formatação...</code></pre>
+      </div>
+    </section>
+  </main>
+
+  <footer><span>Mini-SO · Módulo 05</span><a href="/">Retornar ao painel ↑</a></footer>
+</body>
+</html>

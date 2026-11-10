@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Menu principal do simulador modular de Sistemas Operacionais.">
+  <title>Mini-SO — Painel de módulos</title>
+  <link rel="stylesheet" href="/menu.css">
+  <script src="/menu.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Início do Mini-SO">
+      <span class="brand-mark" aria-hidden="true">OS</span>
+      <span><strong>Mini-SO</strong><small>laboratório de sistemas</small></span>
+    </a>
+    <span class="status"><i aria-hidden="true"></i> núcleo online</span>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="titulo-principal">
+      <div class="eyebrow">Simulador modular · Sistemas Operacionais</div>
+      <h1 id="titulo-principal">Escolha um módulo<br>para iniciar.</h1>
+      <p>Explore, execute e acompanhe conceitos fundamentais de um núcleo de sistema operacional em um ambiente visual.</p>
+      <div class="hero-stats" aria-label="Resumo do projeto">
+        <span><strong>05</strong> módulos</span>
+        <span><strong>05</strong> disponíveis</span>
+        <span><strong>Java</strong> núcleo</span>
+      </div>
+    </section>
+
+    <section class="modules" aria-labelledby="titulo-modulos">
+      <div class="section-heading">
+        <div>
+          <span class="section-number">01</span>
+          <h2 id="titulo-modulos">Módulos do sistema</h2>
+        </div>
+        <p>O núcleo completo está disponível: todos os cinco módulos podem ser executados e inspecionados.</p>
+      </div>
+
+      <div class="module-grid">
+        <a class="module-card featured" href="/modulo1">
+          <div class="card-top"><span>Módulo 01</span><span class="tag available">Disponível</span></div>
+          <div class="icon sync" aria-hidden="true">↻</div>
+          <h3>Concorrência &amp;<br>Sincronização</h3>
+          <p>Threads, mutexes, semáforos e acesso justo a recursos compartilhados.</p>
+          <span class="card-action">Executar módulo <b aria-hidden="true">→</b></span>
+        </a>
+
+        <a class="module-card active" href="/modulo2">
+          <div class="card-top"><span>Módulo 02</span><span class="tag available">Disponível</span></div>
+          <div class="icon" aria-hidden="true">RR</div>
+          <h3>Escalonamento<br>de Processos</h3>
+          <p>Round-Robin, prioridades, aging e métricas de execução.</p>
+          <span class="card-action">Executar módulo <b aria-hidden="true">→</b></span>
+        </a>
+
+        <a class="module-card active memory" href="/modulo3">
+          <div class="card-top"><span>Módulo 03</span><span class="tag available">Disponível</span></div>
+          <div class="icon" aria-hidden="true">01</div>
+          <h3>Memória Virtual<br>&amp; MMU</h3>
+          <p>Paginação, page faults e algoritmos de substituição.</p>
+          <span class="card-action">Executar módulo <b aria-hidden="true">→</b></span>
+        </a>
+
+        <a class="module-card active deadlock" href="/modulo4">
+          <div class="card-top"><span>Módulo 04</span><span class="tag available">Disponível</span></div>
+          <div class="icon" aria-hidden="true">◇</div>
+          <h3>Impasses &amp;<br>Deadlocks</h3>
+          <p>Estados seguros, recursos e algoritmo do banqueiro.</p>
+          <span class="card-action">Executar módulo <b aria-hidden="true">→</b></span>
+        </a>
+
+        <a class="module-card active filesystem" href="/modulo5">
+          <div class="card-top"><span>Módulo 05</span><span class="tag available">Disponível</span></div>
+          <div class="icon" aria-hidden="true">FAT</div>
+          <h3>Sistema<br>de Arquivos</h3>
+          <p>Blocos, tabela FAT e gerenciamento do espaço livre.</p>
+          <span class="card-action">Executar módulo <b aria-hidden="true">→</b></span>
+        </a>
+
+        <button id="exit-button" class="module-card exit-card" type="button">
+          <div class="card-top"><span>Sessão</span></div>
+          <div class="icon" aria-hidden="true">×</div>
+          <h3>Encerrar<br>o Mini-SO</h3>
+          <p>Finalize o servidor local e encerre a sessão atual com segurança.</p>
+          <span class="exit-action">Encerrar sessão</span>
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <footer><span>Mini-SO</span><span>Projeto acadêmico · 2026</span></footer>
+</body>
+</html>

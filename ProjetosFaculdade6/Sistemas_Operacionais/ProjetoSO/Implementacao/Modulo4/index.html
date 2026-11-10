@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Simulação de deadlocks, grafo de recursos e Algoritmo do Banqueiro.">
+  <title>Módulo 4 — Impasses &amp; Deadlocks</title>
+  <link rel="stylesheet" href="/modulo4/modulo4.css">
+  <script src="/modulo4/modulo4.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="back" href="/" aria-label="Voltar ao menu">← <span>Menu principal</span></a>
+    <div class="brand"><span class="brand-mark">OS</span><strong>Mini-SO</strong></div>
+    <span class="status"><i></i> monitor online</span>
+  </header>
+
+  <main>
+    <section class="intro">
+      <div class="module-index">Módulo <strong>04</strong> / 05</div>
+      <div class="intro-copy">
+        <span class="eyebrow">Recursos · ciclos · estado seguro</span>
+        <h1>Evitar o<br><em>impasse.</em></h1>
+        <p>Analise dependências circulares e decida se uma solicitação pode ser atendida sem deixar processos presos para sempre.</p>
+      </div>
+      <div class="conditions" aria-label="Condições de Coffman">
+        <span>Condições de Coffman</span>
+        <ol><li>Exclusão mútua</li><li>Posse e espera</li><li>Sem preempção</li><li>Espera circular</li></ol>
+      </div>
+    </section>
+
+    <section class="concepts" aria-labelledby="concepts-title">
+      <div class="section-heading">
+        <div><span class="section-number">Estratégias</span><h2 id="concepts-title">Detectar ou evitar</h2></div>
+        <p>O grafo encontra dependências circulares existentes; o Banqueiro impede que uma nova concessão crie um estado inseguro.</p>
+      </div>
+      <div class="concept-grid">
+        <article><span class="concept-icon">◇→○</span><small>Detecção</small><h3>Grafo de alocação</h3><p>Processos solicitam recursos; recursos apontam para quem os possui. Com instância única, um ciclo confirma deadlock.</p></article>
+        <article><span class="concept-icon">N = M − A</span><small>Prevenção</small><h3>Algoritmo do Banqueiro</h3><p>A matriz Need registra o que ainda falta. Uma concessão só é efetivada quando existe sequência segura.</p></article>
+      </div>
+    </section>
+
+    <section class="laboratory" aria-labelledby="lab-title">
+      <div class="section-heading light">
+        <div><span class="section-number">Laboratório</span><h2 id="lab-title">Escolha o experimento</h2></div>
+        <p>Execute cenários controlados e acompanhe cada decisão do núcleo.</p>
+      </div>
+      <div class="experiment-grid">
+        <button class="experiment selected" type="button" data-experiment="banqueiro" aria-pressed="true">
+          <span class="experiment-index">01 / Evitação</span><span class="experiment-icon">B</span>
+          <strong>Algoritmo do Banqueiro</strong><small>5 processos · 3 recursos · matriz Need</small>
+        </button>
+        <button class="experiment" type="button" data-experiment="grafo" aria-pressed="false">
+          <span class="experiment-index">02 / Detecção</span><span class="experiment-icon">⌘</span>
+          <strong>Grafo de Recursos</strong><small>3 processos · 3 recursos · busca de ciclo</small>
+        </button>
+        <div class="parameters">
+          <label for="scenario">Cenário da simulação</label>
+          <select id="scenario"></select>
+          <p id="scenario-help"></p>
+          <button id="run-button" class="run" type="button"><span>▶</span><strong>Executar análise</strong></button>
+        </div>
+      </div>
+    </section>
+
+    <section id="results" class="results" aria-live="polite" aria-labelledby="result-title">
+      <div class="results-head">
+        <div><span class="eyebrow">Resultado da análise</span><h2 id="result-title">Monitor aguardando</h2></div>
+        <span id="execution-status" class="execution-status idle"><i></i>Aguardando</span>
+      </div>
+      <p id="result-description">Selecione um experimento para verificar o estado do sistema.</p>
+      <div id="summary" class="summary" hidden></div>
+
+      <div id="banker-result" class="specific-result" hidden>
+        <div class="decision-panel">
+          <div><span>Solicitação avaliada</span><strong id="request-label">—</strong></div>
+          <div><span>Available após concessão tentativa</span><strong id="available-label">—</strong></div>
+          <div id="decision-badge" class="decision-badge">—</div>
+        </div>
+        <div class="result-block">
+          <div class="block-title"><span>01</span><h3>Matrizes do estado tentativo</h3></div>
+          <div id="matrices" class="matrices"></div>
+        </div>
+        <div class="result-block">
+          <div class="block-title"><span>02</span><h3>Sequência segura</h3></div>
+          <div id="safe-sequence" class="safe-sequence"></div>
+        </div>
+      </div>
+
+      <div id="graph-result" class="specific-result" hidden>
+        <div class="result-block">
+          <div class="block-title"><span>01</span><h3>Grafo direcionado</h3></div>
+          <div class="graph-legend"><span><i class="process-dot"></i>Processo</span><span><i class="resource-dot"></i>Recurso</span><span>— Solicitação / alocação →</span></div>
+          <div class="graph-wrapper"><svg id="resource-graph" viewBox="0 0 600 360" role="img" aria-label="Grafo de alocação de recursos"></svg></div>
+        </div>
+        <div class="result-block">
+          <div class="block-title"><span>02</span><h3>Ciclo encontrado</h3></div>
+          <div id="cycle-path" class="safe-sequence"></div>
+        </div>
+      </div>
+
+      <div class="result-block">
+        <div class="block-title"><span>Log</span><h3>Passos do algoritmo</h3></div>
+        <pre id="terminal" tabindex="0"><code><span class="prompt">deadlock:~$</span> aguardando análise...</code></pre>
+      </div>
+    </section>
+  </main>
+
+  <footer><span>Mini-SO · Módulo 04</span><a href="/">Retornar ao painel ↑</a></footer>
+</body>
+</html>

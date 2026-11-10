@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Simulação de escalonamento de processos do Mini-SO.">
+  <title>Módulo 2 — Escalonamento de Processos</title>
+  <link rel="stylesheet" href="/modulo2/modulo2.css">
+  <script src="/modulo2/modulo2.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="back" href="/" aria-label="Voltar ao menu">← <span>Menu principal</span></a>
+    <div class="brand"><span class="brand-mark">OS</span><strong>Mini-SO</strong></div>
+    <span class="status"><i></i> escalonador online</span>
+  </header>
+
+  <main>
+    <section class="intro">
+      <div class="module-index">Módulo <strong>02</strong> / 05</div>
+      <div class="intro-copy">
+        <span class="eyebrow">CPU · filas · preempção · métricas</span>
+        <h1>Quem usa<br>a CPU <em>agora?</em></h1>
+        <p>Compare estratégias de escalonamento e acompanhe cada processo enquanto ele transita pelos estados pronto, executando, bloqueado e finalizado.</p>
+      </div>
+      <div class="state-legend" aria-label="Estados simulados">
+        <span><i class="ready"></i>Pronto</span>
+        <span><i class="running"></i>Executando</span>
+        <span><i class="blocked"></i>Bloqueado</span>
+        <span><i class="finished"></i>Finalizado</span>
+      </div>
+    </section>
+
+    <section class="workload" aria-labelledby="workload-title">
+      <div class="section-heading">
+        <div><span class="section-number">Carga</span><h2 id="workload-title">Processos de entrada</h2></div>
+        <p>A mesma carga é usada nos dois algoritmos para que as métricas possam ser comparadas.</p>
+      </div>
+      <div class="process-cards">
+        <article><b>P1</b><dl><div><dt>Chegada</dt><dd>0</dd></div><div><dt>CPU</dt><dd>4 + 3</dd></div><div><dt>E/S</dt><dd>3</dd></div><div><dt>Prioridade</dt><dd>2</dd></div></dl></article>
+        <article><b>P2</b><dl><div><dt>Chegada</dt><dd>1</dd></div><div><dt>CPU</dt><dd>5</dd></div><div><dt>E/S</dt><dd>—</dd></div><div><dt>Prioridade</dt><dd>1</dd></div></dl></article>
+        <article><b>P3</b><dl><div><dt>Chegada</dt><dd>2</dd></div><div><dt>CPU</dt><dd>2 + 4</dd></div><div><dt>E/S</dt><dd>2</dd></div><div><dt>Prioridade</dt><dd>4</dd></div></dl></article>
+        <article><b>P4</b><dl><div><dt>Chegada</dt><dd>4</dd></div><div><dt>CPU</dt><dd>4</dd></div><div><dt>E/S</dt><dd>—</dd></div><div><dt>Prioridade</dt><dd>3</dd></div></dl></article>
+      </div>
+      <p class="priority-note">Na prioridade, <strong>um número menor representa maior prioridade</strong>. O aging reduz a prioridade numérica a cada 3 unidades de espera.</p>
+    </section>
+
+    <section class="laboratory" aria-labelledby="lab-title">
+      <div class="section-heading light">
+        <div><span class="section-number">Laboratório</span><h2 id="lab-title">Configure a execução</h2></div>
+        <p>Selecione uma política; o núcleo Java executará a simulação em tempo discreto.</p>
+      </div>
+
+      <div class="algorithm-grid">
+        <button class="algorithm selected" type="button" data-algorithm="round-robin" aria-pressed="true">
+          <span class="algorithm-index">01 / Preemptivo</span>
+          <span class="algorithm-icon">RR</span>
+          <strong>Round-Robin</strong>
+          <small>Fila circular com fatias iguais de CPU.</small>
+        </button>
+        <button class="algorithm" type="button" data-algorithm="prioridade-aging" aria-pressed="false">
+          <span class="algorithm-index">02 / Não preemptivo</span>
+          <span class="algorithm-icon">↑</span>
+          <strong>Prioridades + Aging</strong>
+          <small>Favorece prioridades altas sem abandonar quem espera.</small>
+        </button>
+        <div class="parameters">
+          <label for="quantum">Quantum do Round-Robin</label>
+          <div class="quantum-control">
+            <input id="quantum" type="range" min="1" max="6" value="2">
+            <output id="quantum-value" for="quantum">2 u.t.</output>
+          </div>
+          <p id="parameter-help">Cada processo usa até 2 unidades de CPU antes de ser preemptado.</p>
+          <button id="run-button" class="run" type="button"><span>▶</span><strong>Executar escalonador</strong></button>
+        </div>
+      </div>
+    </section>
+
+    <section id="results" class="results" aria-live="polite" aria-labelledby="result-title">
+      <div class="results-head">
+        <div><span class="eyebrow">Resultado da execução</span><h2 id="result-title">Escalonador aguardando</h2></div>
+        <span id="execution-status" class="execution-status idle"><i></i>Aguardando</span>
+      </div>
+      <p id="result-description">Configure o algoritmo e inicie a simulação para gerar a linha do tempo e as métricas.</p>
+
+      <div id="summary" class="summary" hidden></div>
+
+      <div class="result-block">
+        <div class="block-title"><span>01</span><h3>Linha do tempo da CPU</h3></div>
+        <div id="timeline-empty" class="empty-state">A linha de execução aparecerá aqui.</div>
+        <div id="timeline-wrapper" class="timeline-wrapper" hidden>
+          <div id="timeline" class="timeline"></div>
+          <div id="time-axis" class="time-axis"></div>
+        </div>
+      </div>
+
+      <div class="result-block">
+        <div class="block-title"><span>02</span><h3>Métricas por processo</h3></div>
+        <div class="table-wrapper">
+          <table>
+            <thead><tr><th>Processo</th><th>Chegada</th><th>CPU</th><th>Prioridade</th><th>Espera</th><th>Turnaround</th><th>Resposta</th><th>Término</th></tr></thead>
+            <tbody id="metrics"><tr><td colspan="8" class="table-empty">Sem dados de execução.</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="result-block">
+        <div class="block-title"><span>03</span><h3>Transições de estado</h3></div>
+        <pre id="terminal" tabindex="0"><code><span class="prompt">scheduler:~$</span> aguardando execução...</code></pre>
+      </div>
+    </section>
+  </main>
+
+  <footer><span>Mini-SO · Módulo 02</span><a href="/">Retornar ao painel ↑</a></footer>
+</body>
+</html>

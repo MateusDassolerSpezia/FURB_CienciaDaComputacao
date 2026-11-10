@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Simulação de memória virtual, paginação e MMU do Mini-SO.">
+  <title>Módulo 3 — Memória Virtual &amp; MMU</title>
+  <link rel="stylesheet" href="/modulo3/modulo3.css">
+  <script src="/modulo3/modulo3.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="back" href="/" aria-label="Voltar ao menu">← <span>Menu principal</span></a>
+    <div class="brand"><span class="brand-mark">OS</span><strong>Mini-SO</strong></div>
+    <span class="status"><i></i> MMU online</span>
+  </header>
+
+  <main>
+    <section class="intro">
+      <div class="module-index">Módulo <strong>03</strong> / 05</div>
+      <div class="intro-copy">
+        <span class="eyebrow">Paginação · MMU · swap · page fault</span>
+        <h1>Do virtual<br>ao <em>físico.</em></h1>
+        <p>Acompanhe a MMU dividindo endereços, consultando a tabela de páginas e buscando no disco as páginas ausentes da memória principal.</p>
+      </div>
+      <div class="formula" aria-label="Fórmula de tradução de endereço">
+        <span>Endereço físico</span>
+        <strong>quadro × 256</strong>
+        <b>+</b>
+        <strong>deslocamento</strong>
+      </div>
+    </section>
+
+    <section class="scenario" aria-labelledby="scenario-title">
+      <div class="section-heading">
+        <div><span class="section-number">Cenário</span><h2 id="scenario-title">Espaço de endereçamento</h2></div>
+        <p>O processo possui oito páginas virtuais de 256 bytes. A quantidade de quadros físicos pode ser alterada antes da execução.</p>
+      </div>
+      <div class="memory-specs">
+        <article><span>2 KB</span><strong>Memória virtual</strong><small>8 páginas × 256 bytes</small></article>
+        <article><span>256 B</span><strong>Tamanho da página</strong><small>mesmo tamanho de cada quadro</small></article>
+        <article><span>16</span><strong>Acessos</strong><small>sequência fixa e reproduzível</small></article>
+        <article><span>Swap</span><strong>Memória secundária</strong><small>armazena páginas não residentes</small></article>
+      </div>
+      <div class="reference-string">
+        <span>Endereços virtuais</span>
+        <div aria-label="Sequência de endereços virtuais">
+          <b>1900</b><b>42</b><b>301</b><b>650</b><b>77</b><b>900</b><b>128</b><b>1100</b>
+          <b>700</b><b>850</b><b>200</b><b>1000</b><b>620</b><b>1402</b><b>1605</b><b>1850</b>
+        </div>
+      </div>
+    </section>
+
+    <section class="laboratory" aria-labelledby="lab-title">
+      <div class="section-heading light">
+        <div><span class="section-number">Laboratório</span><h2 id="lab-title">Configure a MMU</h2></div>
+        <p>Compare a ordem de carregamento do FIFO com o histórico de uso do LRU.</p>
+      </div>
+      <div class="algorithm-grid">
+        <button class="algorithm selected" type="button" data-algorithm="fifo" aria-pressed="true">
+          <span class="algorithm-index">01 / Fila</span><span class="algorithm-icon">→</span>
+          <strong>FIFO</strong><small>Remove a página carregada há mais tempo.</small>
+        </button>
+        <button class="algorithm" type="button" data-algorithm="lru" aria-pressed="false">
+          <span class="algorithm-index">02 / Recência</span><span class="algorithm-icon">↺</span>
+          <strong>LRU</strong><small>Remove a página usada menos recentemente.</small>
+        </button>
+        <div class="parameters">
+          <label for="frames">Quadros na memória física</label>
+          <div class="frame-control">
+            <input id="frames" type="range" min="2" max="6" value="3">
+            <output id="frames-value" for="frames">3 quadros</output>
+          </div>
+          <div id="frame-preview" class="frame-preview" aria-label="Prévia dos quadros"></div>
+          <p>Quanto menos quadros, maior tende a ser a pressão por substituições.</p>
+          <button id="run-button" class="run" type="button"><span>▶</span><strong>Executar MMU</strong></button>
+        </div>
+      </div>
+    </section>
+
+    <section id="results" class="results" aria-live="polite" aria-labelledby="result-title">
+      <div class="results-head">
+        <div><span class="eyebrow">Resultado da execução</span><h2 id="result-title">MMU aguardando</h2></div>
+        <span id="execution-status" class="execution-status idle"><i></i>Aguardando</span>
+      </div>
+      <p id="result-description">Escolha o algoritmo e execute a simulação para visualizar as traduções e substituições.</p>
+      <div id="summary" class="summary" hidden></div>
+
+      <div class="result-block">
+        <div class="block-title"><span>01</span><h3>Evolução dos quadros</h3></div>
+        <div class="table-wrapper">
+          <table id="history-table">
+            <thead id="history-head"><tr><th>Acesso</th><th>Página</th><th>Resultado</th><th>Memória física</th><th>Endereço físico</th></tr></thead>
+            <tbody id="history"><tr><td colspan="5" class="table-empty">Sem dados de execução.</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="result-block">
+        <div class="block-title"><span>02</span><h3>Tabela de páginas final</h3></div>
+        <div id="page-table" class="page-table"><p class="table-empty">A tabela será preenchida após a execução.</p></div>
+      </div>
+
+      <div class="result-block">
+        <div class="block-title"><span>03</span><h3>Log da MMU e do swap</h3></div>
+        <pre id="terminal" tabindex="0"><code><span class="prompt">mmu:~$</span> aguardando sequência de endereços...</code></pre>
+      </div>
+    </section>
+  </main>
+
+  <footer><span>Mini-SO · Módulo 03</span><a href="/">Retornar ao painel ↑</a></footer>
+</body>
+</html>
