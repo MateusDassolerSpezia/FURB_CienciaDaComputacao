@@ -1,0 +1,3 @@
+O  é um sistema operacional
+Estou aprendendo Shell Script
+Este é o meu primeiro exercício
